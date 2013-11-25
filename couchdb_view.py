@@ -34,8 +34,13 @@ def view_attributes(asset):
     for row in db.view(design_doc,group='true'):
         asset_type = row.key[0]
         if asset_type == asset:
-            attributes.append(row.key[1])
-    return attributes 
+            ch = '.'
+            if ch in row.key[1]:
+                attr_key = row.key[1].rpartition(".")
+                attributes.append(attr_key[0])
+            else:
+                attributes.append(row.key[1])
+    return uniq(attributes)
 
 def view_doc_attributes(asset):
     tmplist2 = []
@@ -77,16 +82,9 @@ def save_attr(asset):
     doc = db[docid]
     tmp1 = []
     for addattr in update_attributes(asset):
-        ch = '.'
-        if ch in addattr:
-            attrs = addattr.rpartition(".")
-            if attrs[0] in addattr:
-                if attrs[0] not in tmp1:
-                    tmp1.append(attrs[0])
-        else:
-            tmp1.append(addattr)
+        tmp1.append(addattr)
     for att in tmp1:
-        print "Adding fields :"+att
+        print docid+": Adding fields :"+att
         doc[att] = { "doc": "", "type":"" }
         db.save(doc)
 
