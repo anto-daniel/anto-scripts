@@ -77,26 +77,16 @@ def save_attr(asset):
     doc = db[docid]
     tmp1 = []
     for addattr in update_attributes(asset):
-    #    print addattr
         ch = '.'
         if ch in addattr:
-            sample = addattr.rpartition(".")
-#            print sample[0]
-            if sample[0] in addattr:
-                if sample[0] not in tmp1:
-                    tmp1.append(sample[0])
-    #                print tmp1
-    #        doc[sample[0]] = "{ "+sample[2]+"\":\" { \"doc\": "", \"type\": "" } }"
-    #        print doc[sample[0]]
+            attrs = addattr.rpartition(".")
+            if attrs[0] in addattr:
+                if attrs[0] not in tmp1:
+                    tmp1.append(attrs[0])
         else:
-           # print addattr
-     #       print addattr
             tmp1.append(addattr)
-            #doc[addattr] = { "doc": "", "type":"" }
-            #db.save(doc)
-    #print tmp1
     for att in tmp1:
-        #print att
+        print "Adding fields :"+att
         doc[att] = { "doc": "", "type":"" }
         db.save(doc)
 
@@ -105,10 +95,7 @@ def main():
         docid = 'asset.attr_doc:'+asset
         field_add = update_attributes(asset)
         if field_add == []:
-            print "all fields are present in "+docid
-        else:
-            for attr in field_add:
-                print "Field "+attr+" will be added in "+docid+" "
+            print docid+": All fields are present."
         save_attr(asset)
 
 if __name__ == "__main__":
