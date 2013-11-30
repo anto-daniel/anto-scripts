@@ -9,8 +9,6 @@ import ConfigParser
 from config import imsconfig
 
 
-Config = ConfigParser.ConfigParser()
-Config.read("config/config.ini")
 ims = imsconfig() 
 user = ims.ConfigSectionMap("credentials")['username']
 passwd = ims.ConfigSectionMap("credentials")['password']
@@ -25,8 +23,12 @@ db = server[dbname]
 
 class couchdb_api():
 
+    """ Class couchdb_api which calls functions to save additional attributes in doc api """
 
     def uniq(self, input):
+        
+        """ returns uniq assets in database """
+        
         output = []
         for x in input:
             if x not in output:
@@ -34,6 +36,9 @@ class couchdb_api():
         return output
 
     def view_assets(self):
+        
+        """ returns all assets in the database """
+        
         tmp = []
         for row in db.view(design_doc,group='true'):
             asset_type = row.key[0]
@@ -42,6 +47,9 @@ class couchdb_api():
         return uniqassets
 
     def view_attributes(self, asset):
+        
+        """ returns all attributes in all the docs in the database """
+        
         attributes = []
         for row in db.view(design_doc,group='true'):
             asset_type = row.key[0]
@@ -50,6 +58,9 @@ class couchdb_api():
         return attributes 
 
     def view_doc_attributes(self, asset):
+        
+        """ returns all attributes in the doc.attr_doc:asset """
+        
         tmplist2 = []
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
@@ -59,6 +70,9 @@ class couchdb_api():
         return tmplist2
 
     def add_attributes(self, asset):
+        
+        """ returns attributes which needs to be added in the doc.attr_doc:asset """
+        
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
         list1 = self.view_attributes(asset)
@@ -72,6 +86,9 @@ class couchdb_api():
         return addfields
 
     def delete_attributes(self, asset):
+        
+        """ returns attributes which needs to be deleted in the doc.attr_doc:asset """
+        
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
         delfields = []
@@ -85,6 +102,9 @@ class couchdb_api():
         return delfields
 
     def save_attr(self, asset):
+        
+        """ Saves the attributes in the doc.attr_doc:asset """
+        
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
         tmp1 = []
@@ -93,14 +113,20 @@ class couchdb_api():
         for atr in tmp1:
             ch = '.'
             if ch not in atr:
-                print docid+": Adding field :"+atr
-                doc[atr] = { "doc": "", "type":"" }
+                if atr in doc:
+                    print "Attribute already exist"
+                else:
+                    print docid+": Adding field :"+atr
+                    doc[atr] = { "doc": "", "type":"" }
         db.save(doc)
         t = []
         for att in tmp1:
             attrs = att.rsplit(".")
             t.append(attrs[0])
         sam = self.uniq(t)
+        for j in sam:
+            doc[j] = { "doc": "", "type": "" }
+        db.save(doc)
         for x in tmp1:
             for y in sam:
                 ch = '.'
@@ -112,16 +138,25 @@ class couchdb_api():
         db.save(doc)
 
 def main():
+    
+    """ Main Function """
+    
     api = couchdb_api()
     assets = api.view_assets()
     for asset in assets:
         docid = 'asset.attr_doc:'+asset
+        print asset
+        if docid not in db:
+            print docid+" not exists"
+            print "creating "+docid
+            db.save({"_id": ""+docid+""})
         field_add = api.add_attributes(asset)
         if field_add == []:
             print docid+": All fields are present."
-        #else:
-        #    for i in field_add:
-        #        print i
+        else:
+            for i in field_add:
+                #print i
+                pass
         api.save_attr(asset)
 
 if __name__ == "__main__":
