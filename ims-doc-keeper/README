@@ -1,0 +1,74 @@
+Help on module config:
+
+NAME
+    config
+
+FILE
+    /home/antodaniel/anto-scripts/ims-doc-keeper/config.py
+
+CLASSES
+    imsconfig
+    
+    class imsconfig
+     |  Methods defined here:
+     |  
+     |  ConfigSectionMap(self, section)
+
+DATA
+    Config = <ConfigParser.ConfigParser instance>
+
+
+Help on module couchdb_doc_api:
+
+NAME
+    couchdb_doc_api
+
+FILE
+    /home/antodaniel/anto-scripts/ims-doc-keeper/couchdb_doc_api.py
+
+CLASSES
+    couchdb_api
+    
+    class couchdb_api
+     |  Class couchdb_api which calls functions to save additional attributes in doc api
+     |  
+     |  Methods defined here:
+     |  
+     |  add_attributes(self, asset)
+     |      returns attributes which needs to be added in the doc.attr_doc:asset
+     |  
+     |  delete_attributes(self, asset)
+     |      returns attributes which needs to be deleted in the doc.attr_doc:asset
+     |  
+     |  save_attr(self, asset)
+     |      Saves the attributes in the doc.attr_doc:asset
+     |  
+     |  uniq(self, input)
+     |      returns uniq assets in database
+     |  
+     |  view_assets(self)
+     |      returns all assets in the database
+     |  
+     |  view_attributes(self, asset)
+     |      returns all attributes in all the docs in the database
+     |  
+     |  view_doc_attributes(self, asset)
+     |      returns all attributes in the doc.attr_doc:asset
+
+FUNCTIONS
+    main()
+        Main Function
+
+DATA
+    __warningregistry__ = {("Not importing directory './config': missing _...
+    db = <Database 'ims-test'>
+    dbname = 'ims-test'
+    design_doc = '_design/sa_reports/_view/all_attributes'
+    host = 'newdb.corp.inmobi.com'
+    ims = <config.imsconfig instance>
+    passwd = 'imsadmin'
+    port = '5984'
+    server = <Server 'http://newdb.corp.inmobi.com:5984'>
+    user = 'imsadmin'
+
+
