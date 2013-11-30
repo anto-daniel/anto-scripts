@@ -1,0 +1,86 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module couchdb_doc_api</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>couchdb_doc_api</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/antodaniel/anto-scripts/ims-doc-keeper/couchdb_doc_api.py">/home/antodaniel/anto-scripts/ims-doc-keeper/couchdb_doc_api.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="ConfigParser.html">ConfigParser</a><br>
+<a href="collections.html">collections</a><br>
+</td><td width="25%" valign=top><a href="couchdb.html">couchdb</a><br>
+<a href="difflib.html">difflib</a><br>
+</td><td width="25%" valign=top><a href="json.html">json</a><br>
+<a href="re.html">re</a><br>
+</td><td width="25%" valign=top><a href="sys.html">sys</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="couchdb_doc_api.html#couchdb_api">couchdb_api</a>
+</font></dt></dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="couchdb_api">class <strong>couchdb_api</strong></a></font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Class&nbsp;<a href="#couchdb_api">couchdb_api</a>&nbsp;which&nbsp;calls&nbsp;functions&nbsp;to&nbsp;save&nbsp;additional&nbsp;attributes&nbsp;in&nbsp;doc&nbsp;api<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="couchdb_api-add_attributes"><strong>add_attributes</strong></a>(self, asset)</dt><dd><tt>returns&nbsp;attributes&nbsp;which&nbsp;needs&nbsp;to&nbsp;be&nbsp;added&nbsp;in&nbsp;the&nbsp;doc.attr_doc:asset</tt></dd></dl>
+
+<dl><dt><a name="couchdb_api-delete_attributes"><strong>delete_attributes</strong></a>(self, asset)</dt><dd><tt>returns&nbsp;attributes&nbsp;which&nbsp;needs&nbsp;to&nbsp;be&nbsp;deleted&nbsp;in&nbsp;the&nbsp;doc.attr_doc:asset</tt></dd></dl>
+
+<dl><dt><a name="couchdb_api-save_attr"><strong>save_attr</strong></a>(self, asset)</dt><dd><tt>Saves&nbsp;the&nbsp;attributes&nbsp;in&nbsp;the&nbsp;doc.attr_doc:asset</tt></dd></dl>
+
+<dl><dt><a name="couchdb_api-uniq"><strong>uniq</strong></a>(self, input)</dt><dd><tt>returns&nbsp;uniq&nbsp;assets&nbsp;in&nbsp;database</tt></dd></dl>
+
+<dl><dt><a name="couchdb_api-view_assets"><strong>view_assets</strong></a>(self)</dt><dd><tt>returns&nbsp;all&nbsp;assets&nbsp;in&nbsp;the&nbsp;database</tt></dd></dl>
+
+<dl><dt><a name="couchdb_api-view_attributes"><strong>view_attributes</strong></a>(self, asset)</dt><dd><tt>returns&nbsp;all&nbsp;attributes&nbsp;in&nbsp;all&nbsp;the&nbsp;docs&nbsp;in&nbsp;the&nbsp;database</tt></dd></dl>
+
+<dl><dt><a name="couchdb_api-view_doc_attributes"><strong>view_doc_attributes</strong></a>(self, asset)</dt><dd><tt>returns&nbsp;all&nbsp;attributes&nbsp;in&nbsp;the&nbsp;doc.attr_doc:asset</tt></dd></dl>
+
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-main"><strong>main</strong></a>()</dt><dd><tt>Main&nbsp;Function</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__warningregistry__</strong> = {("Not importing directory './config': missing __init__.py", &lt;type 'exceptions.ImportWarning'&gt;, 9): True}<br>
+<strong>db</strong> = &lt;Database 'ims-test'&gt;<br>
+<strong>dbname</strong> = 'ims-test'<br>
+<strong>design_doc</strong> = '_design/sa_reports/_view/all_attributes'<br>
+<strong>host</strong> = 'newdb.corp.inmobi.com'<br>
+<strong>ims</strong> = &lt;config.imsconfig instance&gt;<br>
+<strong>passwd</strong> = 'imsadmin'<br>
+<strong>port</strong> = '5984'<br>
+<strong>server</strong> = &lt;Server 'http://newdb.corp.inmobi.com:5984'&gt;<br>
+<strong>user</strong> = 'imsadmin'</td></tr></table>
+</body></html>
