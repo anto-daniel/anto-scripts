@@ -5,7 +5,6 @@ import difflib
 from difflib import Differ
 import sys
 import re
-from couchdb.mapping import Document, TextField, IntegerField, DateTimeField
 
 user = 'imsadmin'
 passwd =  'imsadmin'
