@@ -113,29 +113,39 @@ class couchdb_api():
         for atr in tmp1:
             ch = '.'
             if ch not in atr:
+                try: 
+                    if atr in doc:
+                        print "Attribute already exist"
+                    else:
+                        print docid+": Adding field :"+atr
+                        doc[atr] = { "doc": "", "type":"" }
+                        db.save(doc)
+                except KeyError:
+                    print "error"
+            else:
+            #    print atr
+                fld = atr.rsplit(".")
+            #    print fld[0], fld[1]
+                x = fld[0]
+                y = fld[1]
                 if atr in doc:
-                    print "Attribute already exist"
+                    print "its there"
                 else:
-                    print docid+": Adding field :"+atr
-                    doc[atr] = { "doc": "", "type":"" }
-        db.save(doc)
-        t = []
-        for att in tmp1:
-            attrs = att.rsplit(".")
-            t.append(attrs[0])
-        sam = self.uniq(t)
-        for j in sam:
-            doc[j] = { "doc": "", "type": "" }
-        db.save(doc)
-        for x in tmp1:
-            for y in sam:
-                ch = '.'
-                if y in x and ch in x:
-                    z = x.rsplit('.')
-                    z2 = z[1]
-                    print docid+": Adding attribute :"+z2
-                    doc[y][z2] = { "doc": "", "type":"" }
-        db.save(doc)
+                    #print "not"
+                    if x not in doc:
+                        print x+": its not there . adding .."
+                        doc[x] = { "doc": "", "type":"" }
+                        db.save(doc)
+                    else:
+                        if y not in doc[x]:
+                            print x+": its there. "+y+": not there. Adding "+y
+                            doc[x][y] = { "doc": "", "type":"" }  
+                            db.save(doc)
+                        else:
+                            print "Both "+x+" and "+y+" exists"
+
+  #      db.save(doc)
+        
 
 def main():
     
@@ -155,7 +165,7 @@ def main():
             print docid+": All fields are present."
         else:
             for i in field_add:
-                #print i
+            #    print i
                 pass
         api.save_attr(asset)
 
