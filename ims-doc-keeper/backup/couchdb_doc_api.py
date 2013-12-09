@@ -17,41 +17,38 @@ port = ims.ConfigSectionMap("hostinfo")['port']
 dbname = ims.ConfigSectionMap("db")['db']
 design_doc = ims.ConfigSectionMap("designdoc")['design']
 
-server = couchdb.Server('http://'+host+':'+port)
-server.resource.credentials = (user,passwd)
+server = couchdb.Server('http://'+user+':'+passwd+'@'+host+':'+port)
 db = server[dbname]
 
 
-class asset_doc():
+class couchdb_api():
 
-    """ Main Class """
+    """ Class couchdb_api which calls functions to save additional attributes in doc api """
 
-    def create_deep_dict(self ,value, layers, doc):
-        data = {}
-        layer = layers[0]
-        if layers[1:]:
-            data[layer] = self.create_deep_dict(value, layers[1:], doc)
-        else:
-            data[layer] = value
+    def uniq(self, input):
         
-        return data
-
-
-    def asset_types(self):
+        """ returns uniq assets in database """
         
-        """ returns all asset_types in the database """
+        output = []
+        for x in input:
+            if x not in output:
+                output.append(x)
+        return output
+
+    def view_assets(self):
         
-        uniqassets = {}
+        """ returns all assets in the database """
+        
+        tmp = []
         for row in db.view(design_doc,group='true'):
-            if row.key[0] in uniqassets:
-                pass
-            else:
-                uniqassets[row.key[0]] = 1;
-        return uniqassets.keys()
+            asset_type = row.key[0]
+            tmp.append(asset_type)
+        uniqassets = self.uniq(tmp)
+        return uniqassets
 
     def view_attributes(self, asset):
         
-        """ returns all attributes for a particular asset which is passed as an argument """
+        """ returns all attributes in all the docs in the database """
         
         attributes = []
         for row in db.view(design_doc,group='true'):
@@ -62,7 +59,7 @@ class asset_doc():
 
     def view_doc_attributes(self, asset):
         
-        """ returns all attributes for the particular doc.attr_doc:asset[server,network,....] """
+        """ returns all attributes in the doc.attr_doc:asset """
         
         tmplist2 = []
         docid = 'asset.attr_doc:'+asset
@@ -74,7 +71,7 @@ class asset_doc():
 
     def add_attributes(self, asset):
         
-        """ returns attributes which are not there in the asset document [doc.attr_doc:asset] """
+        """ returns attributes which needs to be added in the doc.attr_doc:asset """
         
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
@@ -88,15 +85,15 @@ class asset_doc():
                 addfields.append(field[1:])
         return addfields
 
-    def del_attributes(self, asset):
+    def delete_attributes(self, asset):
         
-        """ returns attributes which are not there in the asset document [doc.attr_doc:asset] """
+        """ returns attributes which needs to be deleted in the doc.attr_doc:asset """
         
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
+        delfields = []
         list1 = self.view_attributes(asset)
         list2 = self.view_doc_attributes(asset)
-        delfields = []
         for d in Differ().compare(list1,list2):
             matchDelField = re.match( r'^\+(.*)', d, re.M|re.I) 
             if matchDelField:
@@ -104,26 +101,42 @@ class asset_doc():
                 delfields.append(field[1:])
         return delfields
 
-    def save_doc(self, asset):
+    def save_attr(self, asset):
         
         """ Saves the attributes in the doc.attr_doc:asset """
         
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
         tmp1 = []
-        for atr in self.add_attributes(asset):
-            if atr in doc:
-                print "Attribute already exist"
+        for addattr in self.add_attributes(asset):
+            tmp1.append(addattr)
+        for atr in tmp1:
+            ch = '.'
+            if ch not in atr:
+                if atr in doc:
+                    print "Attribute already exist"
+                else:
+                    print docid+": Adding field :"+atr
+                    doc[atr] = { "doc": "", "type":"" }
+                    db.save(doc)
             else:
-                print docid+": Adding field :"+atr
-                doc[atr] = { "doc": "", "type":"" }
-        db.save(doc)
-
-        for delatr in self.del_attributes(asset):
-            if delatr in doc:
-                print "deleting attr: "+delatr
-                doc.pop(delatr)
-        db.save(doc)
+                fld = atr.rsplit(".")
+                x = fld[0]
+                y = fld[1]
+                if atr in doc:
+                    print "its there"
+                else:
+                    if x not in doc:
+                        print x+": its not there . adding .."
+                        doc[x] = { "doc": "", "type":"" }
+                        db.save(doc)
+                    else:
+                        if y not in doc[x]:
+                            print x+": its there. "+y+": not there. Adding "+y
+                            doc[x][y] = { "doc": "", "type":"" }  
+                            db.save(doc)
+                        else:
+                            print "Attribute "+x+"."+y+" exist"
 
         
 
@@ -131,8 +144,8 @@ def main():
     
     """ Main Function """
     
-    api = asset_doc()
-    assets = api.asset_types()
+    api = couchdb_api()
+    assets = api.view_assets()
     for asset in assets:
         docid = 'asset.attr_doc:'+asset
         print asset
@@ -140,10 +153,14 @@ def main():
             print docid+" not exists"
             print "creating "+docid
             db.save({"_id": ""+docid+""})
-        diff_attr = api.add_attributes(asset)
-        if diff_attr == []:
+        field_add = api.add_attributes(asset)
+        if field_add == []:
             print docid+": All fields are present."
-        api.save_doc(asset)
+        else:
+            for i in field_add:
+            #    print i
+                pass
+        api.save_attr(asset)
 
 if __name__ == "__main__":
     main()

@@ -88,21 +88,6 @@ class asset_doc():
                 addfields.append(field[1:])
         return addfields
 
-    def del_attributes(self, asset):
-        
-        """ returns attributes which are not there in the asset document [doc.attr_doc:asset] """
-        
-        docid = 'asset.attr_doc:'+asset
-        doc = db[docid]
-        list1 = self.view_attributes(asset)
-        list2 = self.view_doc_attributes(asset)
-        delfields = []
-        for d in Differ().compare(list1,list2):
-            matchDelField = re.match( r'^\+(.*)', d, re.M|re.I) 
-            if matchDelField:
-                field = matchDelField.group(1)
-                delfields.append(field[1:])
-        return delfields
 
     def save_doc(self, asset):
         
@@ -111,19 +96,41 @@ class asset_doc():
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
         tmp1 = []
-        for atr in self.add_attributes(asset):
-            if atr in doc:
-                print "Attribute already exist"
+        for addattr in self.add_attributes(asset):
+            tmp1.append(addattr)
+        for atr in tmp1:
+            ch = '.'
+            if ch not in atr:
+                try: 
+                    if atr in doc:
+                        print "Attribute already exist"
+                    else:
+                        print docid+": Adding field :"+atr
+                        doc[atr] = { "doc": "", "type":"" }
+                        db.save(doc)
+                except KeyError:
+                    print "error"
             else:
-                print docid+": Adding field :"+atr
-                doc[atr] = { "doc": "", "type":"" }
-        db.save(doc)
+                print atr
+                fld = atr.split(".")
+                value = { "doc": "", "type":"" }
+                data = self.create_deep_dict(value, fld, doc)
+                print data
+                #ln = len(fld)
+                #for i in fld:
+                #    print i+":"
+                #    if i not in doc.keys():
+                #        print i+" not there"
+                #        print data
+                #        doc.update(data)
+                 #       db.save(doc)
+                #    else:
+                #        print i+"there"
+                #        pass
+                #print data
+                #doc.update(data)
+                #db.save(doc)
 
-        for delatr in self.del_attributes(asset):
-            if delatr in doc:
-                print "deleting attr: "+delatr
-                doc.pop(delatr)
-        db.save(doc)
 
         
 
