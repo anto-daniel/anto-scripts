@@ -1,0 +1,40 @@
+def create_deep_dict(value, layers):
+
+    data = {}
+    layer = layers[0]
+
+    if layers[1:]:
+        data[layer] = create_deep_dict(value, layers[1:])
+    else:
+        data[layer] = value
+
+    return data
+
+def deep_dict_value(data, layers):
+
+    layer = layers[0]
+
+    if layers[1:]:
+        return deep_dict_value(data[layer], layers[1:])
+    else:
+        return data[layer]
+
+
+So if you use these functions like this:
+
+layers = ['layer1', 'layer2', 'layer3']
+
+print 'create deep dict:'
+data = create_deep_dict(layers, 'hello')
+print data
+
+print '\nretrieve value from deep dict:'
+print deep_dict_value(layers, data)
+
+It will output:
+
+create deep dict:
+{'layer1': {'layer2': {'layer3': 'hello'}}}
+
+retrieve value from deep dict:
+hello
