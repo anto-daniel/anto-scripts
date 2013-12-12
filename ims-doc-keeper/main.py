@@ -52,13 +52,13 @@ class asset_doc():
     def view_attributes(self, asset):
         
         """ returns all attributes for a particular asset which is passed as an argument """
-        
-        attributes = []
+        dict1 = {}
         for row in db.view(design_doc,group='true'):
             asset_type = row.key[0]
             if asset_type == asset:
-                attributes.append(row.key[1])
-        return attributes 
+                dict1[row.key[1]] = row.value
+        mydict = collections.OrderedDict(sorted(dict1.items()))
+        return mydict
 
     def view_doc_attributes(self, asset):
         
@@ -78,7 +78,7 @@ class asset_doc():
         
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
-        list1 = self.view_attributes(asset)
+        list1 = self.view_attributes(asset).keys()
         list2 = self.view_doc_attributes(asset)
         addfields = []
         for d in Differ().compare(list1,list2):
@@ -86,7 +86,7 @@ class asset_doc():
             if matchAddField:
                 field = matchAddField.group(1)
                 addfields.append(field[1:])
-        return addfields
+        return addfields 
 
     def del_attributes(self, asset):
         
@@ -94,14 +94,14 @@ class asset_doc():
         
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
-        list1 = self.view_attributes(asset)
+        list1 = self.view_attributes(asset).keys()
         list2 = self.view_doc_attributes(asset)
         delfields = []
         for d in Differ().compare(list1,list2):
             matchDelField = re.match( r'^\+(.*)', d, re.M|re.I) 
             if matchDelField:
-                field = matchDelField.group(1)
-                delfields.append(field[1:])
+                fld = matchDelField.group(1)
+                delfields.append(fld[1:])
         return delfields
 
     def save_doc(self, asset):
@@ -110,21 +110,32 @@ class asset_doc():
         
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
-        tmp1 = []
-        for atr in self.add_attributes(asset):
-            if atr in doc:
-                print "Attribute already exist"
+        for addatr in self.add_attributes(asset):
+            if addatr in doc:
+                print "Attribute: "+addatr+" already exist"
             else:
-                print docid+": Adding field :"+atr
-                doc[atr] = { "doc": "", "type":"" }
-        db.save(doc)
-
+                print "Adding Attribute: "+addatr
+                doc[addatr] =  { "doc": "", "type": self.view_attributes(asset)[addatr] } 
         for delatr in self.del_attributes(asset):
             if delatr in doc:
-                print "deleting attr: "+delatr
+                print "Deleting: "+delatr
                 doc.pop(delatr)
+            else:
+                pass
         db.save(doc)
-
+        for att in doc:
+            if "_id" not in att and "_rev" not in att:
+                if "doc" not in doc[att]:
+                    print att+": attribute has no doc field present"
+                    print "Adding doc field in "+att
+                    doc[att]['doc'] = ""
+                elif "type" not in doc[att]:
+                    print att+": attribute has no type field present"
+                    print "Adding type field in "+att
+                    doc[att]['type'] = self.view_attributes(asset)[att]
+                else:
+                    pass
+        db.save(doc)
         
 
 def main():
@@ -140,9 +151,8 @@ def main():
             print docid+" not exists"
             print "creating "+docid
             db.save({"_id": ""+docid+""})
-        diff_attr = api.add_attributes(asset)
-        if diff_attr == []:
-            print docid+": All fields are present."
+        if api.add_attributes(asset) == []:
+            print "All Fields present"
         api.save_doc(asset)
 
 if __name__ == "__main__":
