@@ -34,7 +34,6 @@ class asset_doc():
         data[layer] = self.create_deep_dict(value, layers[1:], doc)
     else:
         data[layer] = value
-    
     return data
 
     def asset_types(self):
