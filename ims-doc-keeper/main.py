@@ -53,6 +53,7 @@ class asset_doc():
         
         """ returns all attributes for a particular asset which is passed as an argument """
         dict1 = {}
+<<<<<<< HEAD
         attributes = []
         attr_type = []
         for row in db.view(design_doc,group='true'):
@@ -60,6 +61,11 @@ class asset_doc():
             if asset_type == asset:
              #   attributes.append(row.key[1])
              #   attr_type.append(row.value)
+=======
+        for row in db.view(design_doc,group='true'):
+            asset_type = row.key[0]
+            if asset_type == asset:
+>>>>>>> 7ac360389a9eafff3da486a056899329698b60f3
                 dict1[row.key[1]] = row.value
         mydict = collections.OrderedDict(sorted(dict1.items()))
         return mydict
@@ -114,6 +120,7 @@ class asset_doc():
         
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
+<<<<<<< HEAD
 #        print self.view_attributes(asset).keys()
 #        for att in doc:
 #            if "_id" not in att and "_rev" not in att:
@@ -122,6 +129,8 @@ class asset_doc():
 #                    print "Saving..."
 #                    doc[att]['type'] = self.view_attributes(asset)[att]
 #                    db.save(doc)
+=======
+>>>>>>> 7ac360389a9eafff3da486a056899329698b60f3
         for addatr in self.add_attributes(asset):
             if addatr in doc:
                 print "Attribute: "+addatr+" already exist"
@@ -133,6 +142,7 @@ class asset_doc():
                 print "Deleting: "+delatr
                 doc.pop(delatr)
             else:
+<<<<<<< HEAD
                 print "no need"
         db.save(doc)
 
@@ -150,6 +160,23 @@ class asset_doc():
                 else:
                     pass
         db.save(doc)
+=======
+                pass
+        db.save(doc)
+        for att in doc:
+            if "_id" not in att and "_rev" not in att:
+                if "doc" not in doc[att]:
+                    print att+": attribute has no doc field present"
+                    print "Adding doc field in "+att
+                    doc[att]['doc'] = ""
+                elif "type" not in doc[att]:
+                    print att+": attribute has no type field present"
+                    print "Adding type field in "+att
+                    doc[att]['type'] = self.view_attributes(asset)[att]
+                else:
+                    pass
+        db.save(doc)
+>>>>>>> 7ac360389a9eafff3da486a056899329698b60f3
         
 
 def main():
