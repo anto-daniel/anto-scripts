@@ -26,6 +26,17 @@ class asset_doc():
 
     """ Main Class """
 
+    
+    def create_deep_dict(self ,value, layers, doc):
+    data = {}
+    layer = layers[0]
+    if layers[1:]:
+        data[layer] = self.create_deep_dict(value, layers[1:], doc)
+    else:
+        data[layer] = value
+    
+    return data
+
     def asset_types(self):
         
         """ returns all asset_types in the database """
