@@ -9,39 +9,39 @@ import ConfigParser
 from config import imsconfig
 
 
-ims = imsconfig() 
-user = ims.ConfigSectionMap("credentials")['username']
-passwd = ims.ConfigSectionMap("credentials")['password']
-host = ims.ConfigSectionMap("hostinfo")['host']
-port = ims.ConfigSectionMap("hostinfo")['port']
-dbname = ims.ConfigSectionMap("db")['db']
-design_doc = ims.ConfigSectionMap("designdoc")['design']
-
-server = couchdb.Server('http://'+host+':'+port)
-server.resource.credentials = (user,passwd)
-db = server[dbname]
-
-
 class asset_doc():
 
     """ Main Class """
 
+    def __init__(self):
+        ims = imsconfig()
+        user = ims.ConfigSectionMap("credentials")['username']
+        passwd = ims.ConfigSectionMap("credentials")['password']
+        host = ims.ConfigSectionMap("hostinfo")['host']
+        port = ims.ConfigSectionMap("hostinfo")['port']
+        dbname = ims.ConfigSectionMap("db")['db']
+        self.design_doc = ims.ConfigSectionMap("designdoc")['design']
+
+        server = couchdb.Server('http://'+host+':'+port)
+        server.resource.credentials = (user,passwd)
+        self.db = server[dbname]
     
     def create_deep_dict(self ,value, layers, doc):
-    data = {}
-    layer = layers[0]
-    if layers[1:]:
-        data[layer] = self.create_deep_dict(value, layers[1:], doc)
-    else:
-        data[layer] = value
-    return data
+    
+        data = {}
+        layer = layers[0]
+        if layers[1:]:
+            data[layer] = self.create_deep_dict(value, layers[1:], doc)
+        else:
+            data[layer] = value
+        return data
 
     def asset_types(self):
         
         """ returns all asset_types in the database """
         
         uniqassets = {}
-        for row in db.view(design_doc,group='true'):
+        for row in self.db.view(self.design_doc,group='true'):
             if row.key[0] in uniqassets:
                 pass
             else:
@@ -52,7 +52,7 @@ class asset_doc():
         
         """ returns all attributes for a particular asset which is passed as an argument """
         dict1 = {}
-        for row in db.view(design_doc,group='true'):
+        for row in self.db.view(self.design_doc,group='true'):
             asset_type = row.key[0]
             if asset_type == asset:
                 dict1[row.key[1]] = row.value
@@ -65,10 +65,13 @@ class asset_doc():
         
         tmplist2 = []
         docid = 'asset.attr_doc:'+asset
-        doc = db[docid]
+        doc = self.db[docid]
         od = collections.OrderedDict(sorted(doc.iteritems()))
         for attr in od:
-            tmplist2.append(attr)
+            elem1 = re.match( r'^\_id', attr, re.M)
+            elem2 = re.match( r'^\_rev', attr, re.M)
+            if not (elem1 or elem2):
+                tmplist2.append(attr)
         return tmplist2
 
     def add_attributes(self, asset):
@@ -76,7 +79,7 @@ class asset_doc():
         """ returns attributes which are not there in the asset document [doc.attr_doc:asset] """
         
         docid = 'asset.attr_doc:'+asset
-        doc = db[docid]
+        doc = self.db[docid]
         list1 = self.view_attributes(asset).keys()
         list2 = self.view_doc_attributes(asset)
         addfields = []
@@ -92,7 +95,7 @@ class asset_doc():
         """ returns attributes which are not there in the asset document [doc.attr_doc:asset] """
         
         docid = 'asset.attr_doc:'+asset
-        doc = db[docid]
+        doc = self.db[docid]
         list1 = self.view_attributes(asset).keys()
         list2 = self.view_doc_attributes(asset)
         delfields = []
@@ -108,7 +111,7 @@ class asset_doc():
         """ Saves the attributes in the doc.attr_doc:asset """
         
         docid = 'asset.attr_doc:'+asset
-        doc = db[docid]
+        doc = self.db[docid]
         for addatr in self.add_attributes(asset):
             if addatr in doc:
                 print "Attribute: "+addatr+" already exist"
@@ -121,7 +124,7 @@ class asset_doc():
                 doc.pop(delatr)
             else:
                 print "no need"
-        db.save(doc)
+        self.db.save(doc)
         for att in doc:
             if "_id" not in att and "_rev" not in att:
                 if "doc" not in doc[att]:
@@ -134,7 +137,7 @@ class asset_doc():
                     doc[att]['type'] = self.view_attributes(asset)[att]
                 else:
                     pass
-        db.save(doc)
+        self.db.save(doc)
         
 
 def main():
@@ -145,13 +148,17 @@ def main():
     assets = api.asset_types()
     for asset in assets:
         docid = 'asset.attr_doc:'+asset
-        print asset
-        if docid not in db:
+        typeid = 'asset.type_doc:'+asset
+        if docid not in api.db:
             print docid+" not exists"
             print "creating "+docid
-            db.save({"_id": ""+docid+""})
+            api.db.save({"_id": ""+docid+""})
+        if typeid not in api.db:
+            print typeid+" not exists"
+            print "creating "+typeid
+            api.db.save({"_id": ""+typeid+"", "doc_text": "", "doc_url": "", "name": ""+asset+""})
         if api.add_attributes(asset) == []:
-            print "All Fields present"
+            print asset+": All Fields present"
         api.save_doc(asset)
 
 if __name__ == "__main__":
