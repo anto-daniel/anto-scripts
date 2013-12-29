@@ -33,6 +33,7 @@ class asset_doc():
             data[layer] = self.create_deep_dict(value, layers[1:], doc)
         else:
             data[layer] = value
+            db.save(doc)
         
         return data
 
@@ -96,6 +97,7 @@ class asset_doc():
         docid = 'asset.attr_doc:'+asset
         doc = db[docid]
         docdata = {}
+        data = {}
         for atr in self.add_attributes(asset):
             ch = '.'
             if ch not in atr:
@@ -104,31 +106,13 @@ class asset_doc():
                 else:
                     print docid+": Adding field :"+atr
                     doc[atr] = { "doc": "", "type":"" }
-                    db.save(doc)
             else:
                 print atr
                 fld = atr.split(".")
                 value = { "doc": "", "type":"" }
                 data = self.create_deep_dict(value, fld, doc)
                 print data
-                docdata.append(data)
-        print docdata
-
-                #ln = len(fld)
-                #for i in fld:
-                #    print i+":"
-                #    if i not in doc.keys():
-                #        print i+" not there"
-                #        print data
-                #        doc.update(data)
-                 #       db.save(doc)
-                #    else:
-                #        print i+"there"
-                #        pass
-                #print data
-                #doc.update(data)
-                #db.save(doc)
-
+            
 
         
 
@@ -148,7 +132,7 @@ def main():
         diff_attr = api.add_attributes(asset)
         if diff_attr == []:
             print docid+": All fields are present."
-        api.save_doc(asset)
+        print api.save_doc(asset)
 
 if __name__ == "__main__":
     main()
