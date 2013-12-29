@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>IMS: Infrastructure Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <style>
+
+      /* GLOBAL STYLES
+      -------------------------------------------------- */
+      /* Padding below the footer and lighter body text */
+
+      body {
+      padding-bottom: 40px;
+      color: #5a5a5a;
+      }
+
+
+
+      /* CUSTOMIZE THE NAVBAR
+      -------------------------------------------------- */
+
+      /* Special class on .container surrounding .navbar, used for positioning it into place. */
+      .navbar-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      margin-top: 20px;
+      margin-bottom: -90px; /* Negative margin to pull up carousel. 90px is roughly margins and height of navbar. */
+      }
+      .navbar-wrapper .navbar {
+
+      }
+
+      /* Remove border and change up box shadow for more contrast */
+      .navbar .navbar-inner {
+      border: 0;
+      -webkit-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+      -moz-box-shadow: 0 2px 10px rgba(0,0,0,.25);
+      box-shadow: 0 2px 10px rgba(0,0,0,.25);
+      }
+
+      /* Downsize the brand/project name a bit */
+      .navbar .brand {
+      padding: 14px 20px 16px; /* Increase vertical padding to match navbar links */
+      font-size: 16px;
+      font-weight: bold;
+      text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+      }
+
+      /* Navbar links: increase padding for taller navbar */
+      .navbar .nav > li > a {
+      padding: 15px 20px;
+      }
+
+      /* Offset the responsive button for proper vertical alignment */
+      .navbar .btn-navbar {
+      margin-top: 10px;
+      }
+
+
+
+      /* CUSTOMIZE THE CAROUSEL
+      -------------------------------------------------- */
+
+      /* Carousel base class */
+      .carousel {
+      margin-bottom: 60px;
+      }
+
+      .carousel .container {
+      position: relative;
+      z-index: 9;
+      }
+
+      .carousel-control {
+      height: 80px;
+      margin-top: 0;
+      font-size: 120px;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+      background-color: transparent;
+      border: 0;
+      z-index: 10;
+      }
+
+      .carousel .item {
+      height: 500px;
+      }
+      .carousel img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      min-width: 100%;
+      height: 550px;
+      }
+
+      .carousel-caption {
+      background-color: transparent;
+      position: static;
+      max-width: 550px;
+      padding: 0 20px;
+      margin-top: 200px;
+      }
+      .carousel-caption h1,
+      .carousel-caption .lead {
+      margin: 0;
+      line-height: 1.25;
+      color: #333;
+      text-shadow: 0 1px 1px rgba(0,0,0,.4);
+      }
+      .carousel-caption .btn {
+      margin-top: 10px;
+      }
+
+
+
+      /* MARKETING CONTENT
+      -------------------------------------------------- */
+
+      /* Center align the text within the three columns below the carousel */
+      .marketing .span4 {
+      text-align: center;
+      }
+      .marketing h2 {
+      font-weight: normal;
+      }
+      .marketing .span4 p {
+      margin-left: 10px;
+      margin-right: 10px;
+      }
+
+
+      /* Featurettes
+      ------------------------- */
+
+      .featurette-divider {
+      margin: 80px 0; /* Space out the Bootstrap <hr> more */
+      }
+      .featurette {
+      padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+      overflow: hidden; /* Vertically center images part 2: clear their floats. */
+      }
+      .featurette-image {
+      margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+      }
+
+      /* Give some space on the sides of the floated elements so text doesn't run right into it. */
+      .featurette-image.pull-left {
+      margin-right: 40px;
+      }
+      .featurette-image.pull-right {
+      margin-left: 40px;
+      }
+
+      /* Thin out the marketing headings */
+      .featurette-heading {
+      font-size: 50px;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -1px;
+      }
+
+
+
+      /* RESPONSIVE CSS
+      -------------------------------------------------- */
+
+      @media (max-width: 979px) {
+
+      .container.navbar-wrapper {
+      margin-bottom: 0;
+      width: auto;
+      }
+      .navbar-inner {
+      border-radius: 0;
+      margin: -20px 0;
+      }
+
+      .carousel .item {
+      height: 500px;
+      }
+      .carousel img {
+      width: auto;
+      height: 500px;
+      }
+
+      .featurette {
+      height: auto;
+      padding: 0;
+      }
+      .featurette-image.pull-left,
+      .featurette-image.pull-right {
+      display: block;
+      float: none;
+      max-width: 40%;
+      margin: 0 auto 20px;
+      }
+      }
+
+
+      @media (max-width: 767px) {
+
+      .navbar-inner {
+      margin: -20px;
+      }
+
+      .carousel {
+      margin-left: -20px;
+      margin-right: -20px;
+      }
+      .carousel .container {
+
+      }
+      .carousel .item {
+      height: 300px;
+      }
+      .carousel img {
+      height: 300px;
+      }
+      .carousel-caption {
+      width: 65%;
+      padding: 0 70px;
+      margin-top: 100px;
+      }
+      .carousel-caption h1 {
+      font-size: 30px;
+      }
+      .carousel-caption .lead,
+      .carousel-caption .btn {
+      font-size: 18px;
+      }
+
+      .marketing .span4 + .span4 {
+      margin-top: 40px;
+      }
+
+      .featurette-heading {
+      font-size: 30px;
+      }
+      .featurette .lead {
+      font-size: 18px;
+      line-height: 1.5;
+      }
+
+      }
+    </style>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="../assets/js/html5shiv.js"></script>
+        <![endif]-->
+
+    <!-- Fav and touch icons -->
+  </head>
+
+  <body>
+
+
+
+    <!-- NAVBAR
+         ================================================== -->
+    <div class="navbar-wrapper">
+      <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
+      <div class="container">
+
+        <div class="navbar navbar-inverse">
+          <div class="navbar-inner">
+            <!-- Responsive Navbar Part 1: Button for triggering responsive navbar (not covered in tutorial). Include responsive CSS to utilize. -->
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand active">IMS</a>
+            <!-- Responsive Navbar Part 2: Place all navbar contents you want collapsed withing .navbar-collapse.collapse. -->
+            <div class="nav-collapse collapse large">
+              <ul class="nav">
+                <li><a href="/search/index.html">Search</a></li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Updates <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#completed">What's Available?</a></li>
+                    <li><a href="#comingsoon">What's Next?</a></li>
+                    <li><a href="#horizon">What's on the Horizon?</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="doc/index.html" target="_blank">Getting Started Guide</a></li>
+		    <li><a href="doc/collection.html" target="_balnk">Collection API</a></li>
+                    <li><a href="doc/idp.html" target="_balnk">Guide for IDP team</a></li>
+                  </ul>
+                </li>
+                <li><a href="#team">The Team</a></li>
+
+                <!-- Read about Bootstrap dropdowns at http://twbs.github.com/bootstrap/javascript.html#dropdowns 
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/reports/infra_reports/reports.html">Infra</a></li>
+                    <li><a href="/reports/sa_reports/reports.html">SA</a></li>
+                  </ul>
+                </li> -->
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div><!-- /.navbar-inner -->
+        </div><!-- /.navbar -->
+
+      </div> <!-- /.container -->
+    </div><!-- /.navbar-wrapper -->
+
+
+
+    <!-- Carousel
+         ================================================== -->
+    <div id="myCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="img/slide-03.png" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Single source of Truth</h1>
+              <p class="lead">IMS collects and organizes information about all of InMobi's infrastructure from many different sources.</p>
+              <p class="lead">Clusters, Hosts, Data centers, Services, Racks, ... build and maintain structured information about infrastructural entities in one highly available distributed data store.</p>
+              <a class="btn btn-large btn-primary" href="doc/index.html">More &rsaquo;</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="img/slide-02.png" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>REST APIs</h1>
+              <p class="lead">IMS is powered by CouchDB and we mostly expose that API directly with a few checks and balances. </p>
+	      <br/>
+	      <div class="row-fluid">
+		<div class="span1"></div>
+		<div class="span4">
+		  <p class="lead"><a href="doc/collection.html">Collection API</a></p>
+		  <p class="lead"><a href="doc/assetmetaapi.html">Asset Metadata API</a></p>
+		</div>
+		<div class="span2"></div>
+		<div class="span4">
+		  <p class="lead">... or Roll your own custom APIs on top of IMS</p>
+		</div>
+		<div class="span1"></div>
+	      </div>
+              <a class="btn btn-large btn-primary" href="doc/index.html">Learn More</a>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img src="img/slide-01.png" alt="">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Control your infrastructure's Life Cycle</h1>
+              <p class="lead">By hooking IMS into each part of Infrastructure lifecycle, we get to measure and maintain Truths about infrastructure. IMS Agent, which runs on all* InMobi servers, already provides most of the information you are looking for. You can hook in your data quite easily too.</p>
+              <a class="btn btn-large btn-primary" href="doc/index.html">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div><!-- /.carousel -->
+
+
+
+    <!-- Marketing messaging and featurettes
+         ================================================== -->
+    <!-- Wrap the rest of the page in another container to center all the content. -->
+
+    <div class="container marketing">
+
+      <!-- Three columns of text below the carousel -->
+      <div class="row">
+        <div class="span4">
+          <h2>Describe</h2>
+          <p>Describe Servers, Load Balancers, Clusters, Services and any thing you feel should be defined. Describe <i>attributes</i> and what values they can take. Describe who can do what, Describe just about everything. IMS leverages CouchDB to let you do this and even build your own user friendly modern web applications.</p>
+        </div><!-- /.span4 -->
+        <div class="span4">
+          <h2>Load</h2>
+          <p>Infra's workflows and SA's tools load metadata about infrastructure into IMS. Our Agent, which runs on all InMobi servers, contributes towards the 600+ pieces of facts that have been collected about all our assets. Additionally, you can load any other infrastructural assets information into IMS through a REST API for which numerous existing SDKs are available. Want even more control? Work with us and we will make additional tools and frameworks.</p>
+        </div><!-- /.span4 -->
+        <div class="span4">
+          <h2>Consume</h2>
+          <p>Use HTTP REST API to consume: check out <A href="/search/index.html">IMS Search</a> powered by the <a href="doc/collection.html">Collection API</a>. There is even more: build custom application workflows around IMS or even get <i>triggered</i> as stuff happens to your beloved infrastructural assets. Orchestrate and Automate.</p>
+        </div><!-- /.span4 -->
+      </div><!-- /.row -->
+
+      <div class="row">
+
+        <!-- START THE FEATURETTES -->
+
+        <div class="featurette">
+          <h2 class="featurette-heading">Replacing inefficiencies. <span class="muted">One step at a time.</span></h2>
+          <p class="lead">For reasons as old as Inmobi itself, our infrastructural information and tools have organised itself into siloes. Multiple twiki pages reference the state of our infrastructure, some arbitrary tools and maybe some puppet configuration files tell us the state of our information. Our approach is to constantly keep executing towards replacing each of these inefficient infrastructural touch points with Minimum Viable Products to help get bits in and out of IMS.</p>
+        </div>
+
+        <hr class="featurette-divider">
+
+        <a name="completed"><h2 class="featurette-heading">The story thus far...</h2></a>
+
+
+        <div class="featurette">
+	  <p class="muted text-right">Dec 10, 2013</p>
+          <h2 class="featurette-heading">Advanced Search</h2>
+	  <p class="lead">Searching by multiple attributes and doing complex queries has been an ask since day 1. Although the earlier <em>release</em> of IMS did not support this, we built the <a href="doc/collection.html">Collection API</a> to make this possible. You can use the collection API too and infact we're looking for CLI tool smiths who want to craft a neat CLI tool for the ops guys where they need it the most. <a href="mailto:ims-dev@inmobi.com?subject=collectionAPI">Work with us</a> or if you're not convinced yet, just 
+	  <a class="btn btn-large btn-primary" href="/search/index.html">Search &raquo;</a></p>
+	</div>
+
+        <div class="featurette">
+	  <p class="muted text-right">Oct 22-Dec 3, 2013</p>
+          <h2 class="featurette-heading"><del class="muted">6 years of manually maintained cruft</del> gets re-organized in 6 weeks.</h2>
+	  <p class="lead">There are things excel sheets and human minds cannot describe as effectively as what a single unix command can. Given we never had any single point of truth, we have all been sshing to machines to find such information. The easier way ought to be simpler: so we started a labourious project of discovering and keeping-in-touch with all of InMobi's assets by building an Agent and installing it everywhere. We knew this will not be easy, so we also ended up building a <a href="/reliability/index.html">Reliability Dashboard</a> to mainly help us get insights and run bug scrubbing activities to constantly improve IMS' data quality and reliability. At the time of this writing, about 70% of our assets are reliable. You can find if your assets are reliable or not and help improve it's reliability. <a class="btn btn-large btn-primary" href="/reliability/index.html">Reliability Dashboard &raquo;</a></p>
+	</div>
+
+        <div class="featurette">
+	  <p class="muted text-right">Oct 11, 2013</p>
+          <h2 class="featurette-heading">IDP can use IMS</h2>
+          <p class="lead">IMS is ready to be pilot tested by IDP team, including an <a href="doc/idp.html">IDP Guide</a> with every possible detail covered.</p>
+        </div>
+
+        <div class="featurette">
+	  <p class="muted text-right">Oct 9, 2013</p>
+          <h2 class="featurette-heading">Excel Sheets uploaded to <del class="muted">Twiki pages</del> IMS.</h2>
+          <p class="lead">We maintained our infrastructural assets in excel sheets. Infra team would upload these excel sheets into a twiki page and a clever twiki plugin turned the excel into twiki tables. <em>A Pretty neat <del>hack</del> silo, eh?</em> In this first release, we have provided a <a href="/xlsupload.html">simple web interface</a> for Infra to upload their excel sheet, review the diff against the DB, validates and updates any changes into IMS.</p>
+        </div>
+
+        <div class="featurette">
+	  <p class="muted text-right">Oct 9, 2013</p>
+          <h2 class="featurette-heading">People go to <del class="muted">Twiki page</del> IMS to find IT data.</h2>
+          <p class="lead">We now have HTTP APIs that support you to do this and a lot more which was earlier not possible with the excel sheet way. <a class="btn btn-large btn-primary" href="doc/index.html#QueryingIMS">Learn More &raquo;</a></p>
+        </div>
+
+	<p class="text-right"><a href="#top">Back to Top</a></p>
+
+        <hr class="featurette-divider">
+
+        <a name="comingsoon"><h2 class="featurette-heading">Coming soon...</h2></a>
+	
+        <div class="featurette">
+          <h2 class="featurette-heading">Under utilized servers <del class="muted">lay waste</del> are tracked.</h2>
+	  <p class="lead">Capacity utilisation and measurement is key to efficient IT operations. As part of Hackasino 2013, in a matter of 2 days and nights and about a couple dozen RedBulls, we put together the <a href="/hackasino/capacity_dashboard.html">Capacity Dashboard</a>. We will be taking this to production soon and getting a hold on all under utilized servers and their owners.</p>
+	</div>
+
+	<p class="text-right"><a href="#top">Back to Top</a></p>
+
+	<hr class="featurette-divider">
+
+	<a name="horizon"><h2 class="featurette-heading">On the Horizon...</h2></a>
+
+        <div class="featurette">
+          <h2 class="featurette-heading">People <del class="muted">do unspeakable things</del> go to IMS to find Load Balancer status of a host.</h2>
+	  <p class="lead">Today we tail log files to know whether a server has been taken out of rotation by the LB. This is not just painful, but just plain unclassy. <a href="https://jira.corp.inmobi.com/browse/IMS-113">This story</a>, when completed, will enable IMS users to simply query an attribute of a host to know which LB / VIP it is behind and whether it is 'out' or 'in' according to the status recently polled from LB. You would be able to watch the lb_status field change from true to false within moments of failing the health check..</p>
+	</div>
+
+        <div class="featurette">
+          <h2 class="featurette-heading">People <del class="muted">have to query IMS HTTP API</del> can use a shiny search and reports UI.</h2>
+	  <p class="lead">We acknowledge that exposing CouchDB API doesn't just cut it. We want to search in ways we all feel it must be searchable... and perhaps even embed a search result into emails or into dashboards. So, we <a href="https://jira.corp.inmobi.com/browse/IMS-129">want to build a user friendly search and reports UI</a> to let users search for assets by providing complex search rules. </p>
+	</div>
+
+	<p class="text-right"><a href="#top">Back to Top</a></p>
+
+      </div>
+
+</div>
+
+<!-- /END THE FEATURETTES -->
+
+
+<!--TEAM -->
+
+<div class="grey_flood">
+  <div class="container">
+    <div id="hero_pagination_holder">
+
+      <ul id="hero_pagination" class="pagination">
+      </ul>
+
+    </div>
+    <div class="row pad_top_collapsing">
+      <div class="span5 title">
+        <a name="team"><h1>The IMS Team</h1></a>
+      </div>
+
+      <div class="span3 offset1 process" id="process_understand">
+        <img src="img/anto.png" alt="Anto Daniel"/>
+        <p>Anto Daniel</p>
+      </div>
+      <div class="span3 process" id="process_research">
+        <img src="img/george.png" alt="George Tony"/>
+        <p>George Tony</p>
+      </div>
+      <div class="row pad_small">
+        <div class="span3 process" id="process_concept">
+          <img src="img/melvil.png" alt="Melvil Adapoor"/>
+          <p>Melvil Adapoor</p>
+        </div>
+        <div class="span3 process" id="process_design">
+          <img src="img/sai.png" alt="Sai Srinivasan"/>
+          <p>Sai Srinivasan</p>
+        </div>
+        <div class="span3 process" id="process_develop">
+          <img src="img/suraj.png" alt="Suraj Kumar"/>
+          <p>Suraj Kumar</p>
+        </div>
+      </div>
+    </div>
+    <!-- /team -->
+
+    <!-- FOOTER -->
+    <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+      <p>&copy; 2013 InMobi &middot; Our foot prints: <a href="https://github.corp.inmobi.com/platform-pe/">Github</a> &middot; <a href="mailto:platform-pe@inmobi.com">Mailing list</a></p>
+    </footer>
+
+  </div><!-- /.container -->
+
+
+
+  <!-- Le javascript
+       ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="js/jquery.js"></script>
+  <script src="js/holder.min.js"></script>
+  <script src="js/bootstrap-transition.js"></script>
+  <script src="js/bootstrap-alert.js"></script>
+  <script src="js/bootstrap-modal.js"></script>
+  <script src="js/bootstrap-dropdown.js"></script>
+  <script src="js/bootstrap-scrollspy.js"></script>
+  <script src="js/bootstrap-tab.js"></script>
+  <script src="js/bootstrap-tooltip.js"></script>
+  <script src="js/bootstrap-popover.js"></script>
+  <script src="js/bootstrap-button.js"></script>
+  <script src="js/bootstrap-collapse.js"></script>
+  <script src="js/bootstrap-carousel.js"></script>
+  <script src="js/bootstrap-typeahead.js"></script>
+  <script>
+    !function ($) {
+    $(function(){
+    // carousel demo
+    $('#myCarousel').carousel()
+    })
+    }(window.jQuery)
+  </script>
+  <script src="../assets/js/holder/holder.js"></script>
+</body>
+</html>

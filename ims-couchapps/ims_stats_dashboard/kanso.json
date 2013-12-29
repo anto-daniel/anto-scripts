@@ -1,0 +1,12 @@
+{
+    "name": "ims_stats_dashboard",
+    "version": "0.0.1",
+    "description": "CouchApp to visually represent the classification of various assets thereby present the reliability view of IMS",
+    "attachments": ["dashboard.html"],
+    "dependencies": {
+        "attachments": null,
+        "db": null,
+        "jquery": null
+    }
+}
+

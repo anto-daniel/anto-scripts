@@ -1,0 +1,12 @@
+{
+    "name": "ims_stats_dashboard",
+    "version": "0.0.1",
+    "description": "CouchApp with a set of visualization widgets(pie,table,etc...) to present the data coming from various group-by views (ims-widget-reports)",
+    "attachments": ["reliability.html","doc.html","pie_widget.html","table_widget.html","CSS","JS","images"],
+    "dependencies": {
+        "attachments": null,
+        "db": null,
+        "jquery": null
+    }
+}
+

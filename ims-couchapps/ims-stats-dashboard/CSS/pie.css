@@ -1,0 +1,26 @@
+#main-container{
+   margin: 50px 40px 50px 30px;
+}
+
+#pie {
+  min-width: 310px; 
+  height: 400px; 
+}
+
+p.normal {
+  font-size:16px;
+  font-weight:bold;
+}
+
+#head {
+  font-size:16px;
+  font-weight:bold;
+}
+
+#desc {
+  background-color: #CCFF99;
+  font-size:16px;
+  font-style:italic;
+  width: auto;
+}
+

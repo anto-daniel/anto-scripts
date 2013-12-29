@@ -1,0 +1,12 @@
+{
+  "name": "sa_reports",
+  "version": "0.0.1",
+  "description": "ims reports for sa",
+  "modules": ["lib"],
+  "load": "lib/app",
+  "dependencies": {
+    "attachments": null,
+    "modules": null,
+    "properties": null
+  }
+}

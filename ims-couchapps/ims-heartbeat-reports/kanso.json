@@ -1,0 +1,11 @@
+{"name" : "heartbeat",
+ "version": "0.0.1",
+ "description": "views for memory_daily",
+ "modules":["lib"],
+ "load":"lib/view",
+ "dependencies": {
+    "attachments": null,	
+    "modules" : null,
+    "properties":null
+  }
+}

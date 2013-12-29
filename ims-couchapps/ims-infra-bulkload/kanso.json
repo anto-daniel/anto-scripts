@@ -1,0 +1,19 @@
+{
+    "name": "infra_bulkload",
+    "version": "0.0.1",
+    "description": "UI to Bulk load from an XLS file",
+    "attachments": ["lib/jquery-1.10.2.min.js", "static", "jsonparser.html" ],
+    "less": {
+        "compress": true,
+        "compile": ["static/css/styles.less","static/css/styles1.less","static/css/reportscss.less"],
+        "remove_from_attachments": true
+    },
+    "modules": ["lib"],
+    "dependencies": {
+        "attachments": null,
+        "less-precompiler": null,
+        "bootstrap": null,
+        "jquery": null
+   
+    }
+}

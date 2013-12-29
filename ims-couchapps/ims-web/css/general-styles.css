@@ -1,0 +1,309 @@
+#ims{
+	font-family: ubuntu;
+	font-style: bold;
+}
+.global-container{
+	width: 95%;
+	
+	max-height: 100%;
+	margin: 60px  auto;
+	position: relative;
+}
+
+.level2-1{
+	width: 60%;
+
+}
+.level2-2{
+	width: 30%;
+
+}
+
+#inner-div-bck{
+	width: 990px;
+	height: 100%;
+	margin: 0px auto;
+	//border-style: solid;
+	border-color: green;
+	background-image: url(../img/dc-map.png);
+	background-size: 100%;
+}
+
+#inner-div{
+	width: 990px;
+	height: 100%;
+	margin: 0px auto;
+	//border-style: solid;
+	border-color: green;
+	background-size: 100%;
+}
+
+.search-container{
+	margin: 10px auto;
+	width: 500px;
+
+}
+
+#s-bar{
+	float: right;
+}
+.footer{
+	height: 25px;
+
+}
+
+#ua2{
+	position: relative;
+	left: 300px;
+	top: 180px;
+	width: 40px;
+	height: 40px; 
+}
+
+#uj1{
+	position: relative;
+	left: 80px;
+	top: 80px;
+	width: 40px;
+	height: 40px;
+
+}
+
+#lhr1{
+	position: relative;
+	left: 480px;
+	top: 20px;
+	width: 40px;
+	height: 40px;
+}
+
+#hkg1{
+
+	position: relative;
+	left: 760px;
+	top: 100px;
+	width: 40px;
+	height: 40px;
+}
+
+#corp{
+	position: relative;
+	left: 630px;
+	top: 120px;
+	width: 40px;
+	height: 40px;
+
+}
+
+#aws{
+	position: relative;
+	left: 480px;
+	top: 270px;
+	width: 90px;
+	height: 40px;
+	border-style: inset;
+	border-width: 1px;
+
+}
+
+ul.dropdown-menu-form {
+    padding: 5px 10px 0;
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+#table-container{
+	width: 90%;
+	margin: 20px auto;
+}
+
+
+.box {
+	width:95%;
+	height:200px;
+	background:#FFF;
+	margin:40px auto;
+
+}
+
+.box2 {
+	width:90%;
+
+	background:#FFF;
+	
+	padding: 15px 5px 5px 5px;
+}
+
+.effect8
+{
+  	position:relative;       
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+       -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.effect8:before, .effect8:after
+{
+	content:"";
+    position:absolute; 
+    z-index:-1;
+    -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:10px;
+    bottom:10px;
+    left:0;
+    right:0;
+    -moz-border-radius:100px / 10px;
+    border-radius:100px / 10px;
+} 
+.effect8:after
+{
+	right:10px; 
+    left:auto;
+    -webkit-transform:skew(8deg) rotate(3deg); 
+       -moz-transform:skew(8deg) rotate(3deg);     
+        -ms-transform:skew(8deg) rotate(3deg);     
+         -o-transform:skew(8deg) rotate(3deg); 
+            transform:skew(8deg) rotate(3deg);
+}
+
+.info-panel{
+	width: 85%;
+	margin: 10px auto;
+	border-radius:10px;	
+	border-style: solid;
+	border-width: 1px;
+	border-color: #1E90FF ;
+	background-color: #F5F5F5 ;
+	padding: 10px 40px 10px 40px;
+
+}
+
+.panel-canvas{
+	padding-left: 10px;
+	padding-right: 10px
+
+}
+
+.asset-info-table{
+	width: 100%;
+	font-size: 14px;
+
+
+}
+
+.info-title{
+	font-size: 14px;
+	font-weight:bold;
+	color: #708090;
+
+}
+
+
+#cost-board{
+	border-width: 2px;
+	border-radius: 5px;
+	border-style: solid;
+	border-color: #00FF00;
+	margin-top: 40px;
+
+
+}
+#accordion{
+	padding-top: 20px;
+
+}
+
+#cost-table,.cost-item{
+	color: grey;
+	font-weight: bold;
+}
+
+.filter-btn{
+	padding-top: 0px;
+	margin-top: 0px;
+}
+
+#search{
+	
+	width: 400px;
+}
+
+.tst{
+	border-style: solid;
+}
+
+.graph{
+	padding: 10px 10px 10px 10px;
+	margin: 15px ;
+	border:solid;
+	border-width: 1px;
+	border-color: silver;
+	border-radius: 3px;
+}
+
+.ui-autocomplete {
+    max-height: 300px;
+  background:blue;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+.top{
+	float: right;
+}
+
+.left{
+	float: left;
+
+}
+
+#dialog{
+	display: none;
+}
+
+#field-selector{
+	min-width: 200px;
+	height: 350;
+}
+
+.dialog.in { overflow:visible; }
+
+body {
+     margin: 0;
+     background: url('');
+     background-size: 100%;
+     background-repeat: no-repeat;
+
+
+    display: compact;
+     font: 13px/18px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.set-bg { background-color: #F0F0F0  ; }
+
+#myslider{
+        display: none;
+}
+
+.slider .slider-horizontal {
+	background: url('/hackasino/img/slider-bg.png');
+	background-size: "cover";
+	padding: 10px;
+}
+
+.color{
+	background-color: #FA3;
+}
+
+.modal-body {
+    max-height: 700px;
+}
+
+#reason{
+	width: 400px;
+}
+
+.claim{
+
+}

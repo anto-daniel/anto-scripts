@@ -1,0 +1,11 @@
+{
+    "name": "ims_asset_report",
+    "version": "0.0.1",
+    "description": "summary of all the assets in IMS",
+    "modules": ["lib"],
+    "load": "lib/app",
+    "dependencies": {
+        "modules": null,
+        "properties": null
+    }
+}

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Collection API User Guide</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="collection api guide" name="guide for collection api">
+    <meta content="" name="george Tony"><!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href=
+          "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/black-tie/jquery-ui.css"
+          rel="stylesheet">
+    <link href="../css/jquery.tocify.css" rel="stylesheet">
+    <link href="../css/prettify.css" rel="stylesheet" type="text/css">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+    <style>
+      body {
+      padding-top: 20px;
+      }
+      p {
+      font-size: 16px;
+      }
+      .headerDoc {
+      color: #005580;
+      }
+
+      @media (max-width: 767px) {
+      #toc {
+      position: relative;
+      width: 100%;
+      margin: 0px 0px 20px 0px;
+      }
+      }
+      #view
+      {
+      width:100%;
+      border-collapse:collapse;
+      }
+      #view td, #view th
+      {
+      font-size:1em;
+      border:1px solid #3333FF;
+      padding:3px 7px 2px 7px;
+      }
+      #view th
+      {
+      font-size:1.1em;
+      text-align:left;
+      padding-top:5px;
+      padding-bottom:4px;
+      background-color:#5959FF;
+      color:#ffffff;
+      }
+      #view tr.alt td
+      {
+      color:#000000;
+      background-color:#EBEBE0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--Menu Conatiner-->
+    <div id="Nav-Bar">
+      <div class="navbar  navbar-fixed-top navbar-inverse">
+        <div class="navbar-inner">
+          <div class="container">
+            <a class="brand" href="http://ims.corp.inmobi.com/" target="_blank">
+              <div id='ims'><b>IMS</b>
+              </div>
+            </a>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li><a href="index.html">IMS Guide</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin: 50px 30px auto 30px" class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div id="toc"></div><!--/.well -->
+        </div><!--/span-->
+
+        <div class="span9">
+          <div class="hero-unit">
+            <h1>User Guide for IMS Collection API</h1><br>
+
+            <h2>About</h2>
+
+            <div class="github-widget" data-repo=
+                 "gfranko/jquery.tocify.js"></div><br>
+
+            <p>IMS stores rich JSON information about IT assets. In order to make this easily searchable, the Collection API has been created.
+              Collection API is a way to flatten the tree-like structure into a dotted-notation to represent 'keys' and search for values.</p>
+            <h3>Why the term "Collection"?</h3>
+	    <p>Every ops workflow involves referencing a bunch of servers in our applications - such as monitoring, alerting, deployments, configuration management, etc., We wanted a simple way to enable everybody to reference <b>a collection of hosts</b> by describing the criteria condition for selecting assets from IMS database. The criteria is described as a self descriptive logical expression such as 'colo="ua2" and cluster="adserve" and lb.live=true'.</p>
+	    <h3>Goals</h3>
+	    <ul>
+	      <li><b>Simplify</b>: Although IMS' data is a rich tree structure in the form of JSON, provide a uniform and simple way to reference and access values (hash within hash).</li>
+	      <li><b>Empower</b>: Provide powerful search primitives
+		<ul>
+		  <li>AND</li>
+		  <li>OR</li>
+		  <li>Nesting using ( ... )</li>
+		  <li>Logical comparison operators (sub string search, regex, numerical operators (=, <, >, <=, >=)</li>
+		</ul></li>
+	    </ul>
+		   
+
+          </div>
+
+          <h2>Basics of IMS?</h2>
+
+          <p>Kindly refer the <a href="http://ims.corp.inmobi.com/doc/index.html" target="_blank">IMS Guide</a> to get a heads-up on how to get started
+            with IMS.</p>
+
+          <h2>Scope</h2>
+
+          <p>This guide will help in understanding collection api and how to use it.</p>
+
+          <h2>Query Parameters</h2>
+
+          <p>There are three parameter given to collection api to search </p>
+
+          <table id="view">
+            <tr>
+              <th>Parameter</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+
+            <tr>
+              <td>ex</td>
+              <td>under "ex" is expression to be evaluated is passed to collection api .API also support regex  </td>
+              <td><a href='http://ims.corp.inmobi.com:5984/ims-test/_design/collection/_list/collection/collection?ex=colo="ua2"&filter=itag,fqdn'>ex=colo="ua2"</a>
+                <a href='http://ims.corp.inmobi.com:5984/ims-test/_design/collection/_list/collection/collection?ex=fqdn=/hypr100[0-5]/&filter=itag,fqdn'>ex=fqdn=/hypr100[0-5]/</a></td>
+            </tr>
+
+            <tr class="alt">
+              <td>fiter</td>
+              <td>filter is used filter the fields and select desired ones.eg macid,itag etc. By default Filter send all data</td>
+              <td><a href='http://ims.corp.inmobi.com:5984/ims-test/_design/collection/_list/collection/collection?ex=itag="ua2"&filter=itag,colo'>filter=itag,colo</a></td>
+            </tr>
+
+            <tr>
+              <td>type</td>
+              <td>type is used to select catagory of machine to select like server,network,storage .By default type is server</td>
+              <td><a href='http://ims.corp.inmobi.com:5984/ims-test/_design/collection/_list/collection/collection?ex=itag="HKG"&type=network'>&type=network</a></td>
+            </tr>
+          </table>
+
+          <h2>Operators</h2>
+          <p> Expression to evaluate can be created using combination of operators .They are</p>
+          <table id="view">
+            <tr>
+              <th>Operator</th>
+              <th>Description</th>
+              <th>Example</th>
+            </tr>
+
+            <tr>
+              <td>()</td>
+              <td>parantheses used to group expression or sub-expression together</td>
+              <td>(colo="ua2"|colo="uj1")</td>
+            </tr>
+
+            <tr class="alt">
+              <td> = </td>
+              <td>equalTo operator is used check for equality of expression</td>
+              <td>itag="UA2SR10065"</td>
+            </tr>
+
+            <tr >
+              <td> != </td>
+              <td> notEqualTo operator is used check for non equality of expression</td>
+              <td>colo!="ev1"</td>
+            </tr>
+
+            <tr class="alt">
+              <td> & </td>
+              <td> & is used for logical AND operation .due to URL encoding & should be replaced by %26 for URL </td>
+              <td>colo="ua2"%26fqdn="ads"</td>
+            </tr>
+            <tr>
+              <td> | </td>
+              <td> |  is used for logical OR  operation </td>
+              <td>fqdn="hypr"|fqdn="studio"</td>
+            </tr>
+            <tr class="alt">
+              <td> &gt; </td>
+              <td> &gt; is used for relational greater than operation </td>
+              <td>capex>3500 </td>
+            </tr>
+            <tr>
+              <td> &lt; </td>
+              <td> &lt;   is used for relational  less than  operation </td>
+              <td>capex<3500</td>
+                          </tr>
+            <tr class="alt">
+              <td> &gt;= </td>
+              <td> &gt;= is used for relational greater than or equalTo operation </td>
+              <td>capex&gt;=3500 </td>
+            </tr>
+            <tr>
+              <td> &lt;= </td>
+              <td> &lt;=   is used for relational  less than or equalTo  operation </td>
+              <td>capex&lt;=3500</td>
+            </tr>
+          </table>
+          <h2>How To's</h2>
+
+          <ol>
+            <li>
+              <h3>Using Parameter</h3>
+
+              <ul>
+                <li>
+                  <h4>EX</h4>
+                  <p> By default filter is all and type is server</p>
+                  <p> $ curl <a href='http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=itag="UA2SR10001"'>'http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=itag="UA2SR10001"'</a></p>
+                  <pre class="prettyprint">
+                    [{"_id":"asset.server:UA2SR10001","_rev":"16-4aeba7ac41a19afa03ce064fcb12d7db","cloud":"no","colo":"ua2","domain":"ops.ua2.inmobi.com","fqdn":"hypr1001.ops.ua2.inmobi.com","hardwareisa":"unknown","hardwaremodel":"x86_64","hostname":"hypr1001","id":"root","manufacturer":"HP","osfamily":"Debian","path":"/opt/inmobi/bin:/opt/inmobi/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games","productname":"ProLiant DL360 G7","ps":"ps -ef","rubysitedir":"/usr/local/lib/site_ruby/1.8","selinux":"false","serialnumber":"USE111N44T","type":"Rack Mount Chassis","uniqueid":"020a7400","uuid":"35373932-3337-5553-4531-31314E343454","processor":{"physicalprocessorcount":"1","processor":"Intel(R) Xeon(R) CPU           E5620  @ 2.40GHz","processorcount":"8"}
+                    ......
+                    "consoleserver":"con1004.ops.ua2","consoleport":7006,"physical":true,"macid":"3c:4a:92:ee:6f:30","merged":true,"hw_profile":"type1","property":"unknown","capex":4500,"opex":300}]
+                  </pre>
+                  <p> By using // user can specify regular expression</p>
+                  <p> $ curl <a href='http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=itag=/UA2SR/&filter=itag,fqdn'>'http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=itag=/UA2SR/'&filter=itag,fqdn</a></p>
+                  <pre class="prettyprint">
+                    [{"itag":"UA2SR10001","fqdn":"hypr1001.ops.ua2.inmobi.com"},{"itag":"UA2SR10003","fqdn":"stg2101.grid.ua2.inmobi.com"},
+                    {"itag":"UA2SR10004","fqdn":"gs1001.blue.ua2.inmobi.com"},{"itag":"UA2SR10005","fqdn":"gs1147.red.ua2.inmobi.com"},
+                    {"itag":"UA2SR10007","fqdn":"gsmon1.grid.ua2.inmobi.com"},{"itag":"UA2SR10008","fqdn":"gsdc3005.red.ua2.inmobi.com"},
+                    {"itag":"UA2SR10009","fqdn":"gsdc3004.red.ua2.inmobi.com"},{"itag":"UA2SR10013","fqdn":"gsdc3001.red.ua2.inmobi.com"},
+                    .......
+                    {"itag":"UA2SR10376","fqdn":"gs5122.grid.ua2.inmobi.com"}]
+                  </pre>
+                </li>
+
+                <li>
+                  <h4>FILTER</h4>
+                  <p>filter only mac address,hostname(fqdn), and ip address of server in colo ua2</p>
+                  <p> $ curl <a href='http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=colo="ua2"&filter=fqdn,macid,ip.ipaddress'>
+                      http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=colo="ua2"&filter=fqdn,macid,ip.ipaddress</a></p>
+                  <pre class="prettyprint">
+                    [{"fqdn":"hypr1001.ops.ua2.inmobi.com","macid":"3c:4a:92:ee:6f:30","ip.ipaddress":"10.2.0.116"},
+                    {"fqdn":"stg2101.grid.ua2.inmobi.com","macid":"78:e7:d1:f7:81:ac","ip.ipaddress":"10.2.14.100"},
+                    {"fqdn":"gs1001.blue.ua2.inmobi.com","macid":"78:e7:d1:f6:bd:20","ip.ipaddress":"10.2.14.71"},
+                    {"fqdn":"gs1147.red.ua2.inmobi.com","macid":"00:25:90:3a:20:0a","ip.ipaddress":"10.3.1.149"},
+                    .....
+                    {"fqdn":"web2020.ads.ua2.inmobi.com","macid":"52:54:0a:7b:d5:ea","ip.ipaddress":"10.2.0.151"}]
+
+
+                  </pre>
+                </li>
+
+                <li>
+                  <h4>Type</h4>
+                  <p>Seacrh only on specified type .Eg query racku = 39 and filter itag,servername and type network </p>
+                  <p> $ curl <a href='http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=racku=39&type=network&filter=itag,servername'>
+                      http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=racku=39&type=network&filter=itag,servername' </a></p>
+                  <pre class="prettyprint">
+                    [{"itag":"HKG1NW10004","servername":"hk2-inmobi-rack103-lb01"},
+                    {"itag":"HKG1NW10005","servername":"hk2-inmobi-rack104-lb02"}]
+
+
+                  </pre>
+                </li>
+                <h3>expression using operator and combinations</h3>
+
+                <ul>
+                  <li>
+                    <h4>operator equalTo</h4>
+                    <p>Query given above are examples</p>
+                  </li>
+
+                  <li>
+                    <h4>operator notEqualTo</h4>
+                    <p>$ curl <a href='http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=racku!=39&type=network&filter=itag,servername,racku'>
+                        http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=racku!=39&type=network&filter=itag,servername,racku</a></p>
+                    <pre class="prettyprint">
+                      [{"itag":"HKG1NW10001","servername":"hk2-inmobi-rack103-fw01","racku":43},
+                      {"itag":"HKG1NW10002","servername":"hk2-inmobis-rack103-vpn01","racku":41},
+                      {"itag":"HKG1NW10003","servername":"hk2-inmobi-rack104-vpn02","racku":41},
+                      {"itag":"HKG1NW10006","servername":"hk2-inmobi-rack103-coresw01","racku":1},
+                      .....
+                      {"itag":"HKG1NW10021","servername":"hk2-inmobi-rack104-netkvm02","racku":36}]
+
+                    </pre>
+                  </li>
+
+                  <li>
+                    <h4>operator AND</h4>
+                    <p>query to get itag and hostname for machine in colo "ua2" and belong to adserve by defult type is 'server'</p>
+                    <p>$ curl <a href='http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=colo="ua2"%26fqdn="ads"&filter=itag,fqdn'>
+                        'http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=colo="ua2"%26fqdn="ads"&filter=itag,fqdn'</a></p>
+                    <pre class="prettyprint">
+                      [{"itag":"UA2SR10021","fqdn":"web1019.ads.ua2.inmobi.com"},
+                      {"itag":"UA2SR10022","fqdn":"vm1005.ads.ua2.inmobi.com"},
+                      {"itag":"UA2SR10023","fqdn":"adrel-s1002.ads.ua2.inmobi.com"},
+                      {"itag":"UA2SR10024","fqdn":"web1024.ads.ua2.inmobi.com"},
+                      ......
+                      {"itag":"UA2VM10363","fqdn":"web2021.ads.ua2.inmobi.com"},
+                      {"itag":"UA2VM10364","fqdn":"web2020.ads.ua2.inmobi.com"}]
+                    </pre>
+                  </li>
+                  <li>
+                    <h4>operator OR</h4>
+                    <p>query to get itag and hostname for machine in colo "ua2" or colo "hkg1" by default type is 'server'</p>
+                    <p> $ curl <a href='http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=colo="ua2"|colo="hkg1"&filter=itag,fqdn'>
+                        'http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=colo="ua2"|colo="hkg1"&filter=itag,fqdn'</a></p>
+                    <pre class="prettyprint">
+                      [{"itag":"HKG1SR10001","fqdn":"opgs4101.grid.hkg1.inmobi.com"},
+                      {"itag":"HKG1SR10002","fqdn":"opgs4102.grid.hkg1.inmobi.com"},
+                      {"itag":"HKG1SR10003","fqdn":"ophb4101.grid.hkg1.inmobi.com"},
+                      .......
+                      {"itag":"UA2SR10046","fqdn":"db1001.ads.ua2.inmobi.com"},
+                      {"itag":"UA2SR10047","fqdn":"vm1002.ads.ua2.inmobi.com"},
+                      {"itag":"UA2SR10049","fqdn":"dw1002.app.ua2.inmobi.com"},
+                      .......
+                      {"itag":"UA2VM10364","fqdn":"web2020.ads.ua2.inmobi.com"}]
+
+                    </pre>
+                  </li>
+                  <li>
+                    <h4>relational Greater Than Operator</h4>
+                    <p>query to get itag and racku for network whose racku is greater than 20</p>
+                    <p> $ curl <a href='http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=racku>20&filter=racku,itag&type=network'>
+                  'http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=racku&gt;20&filter=racku,itag&type=network'</a></p>
+<pre class="prettyprint">
+  [{"racku":43,"itag":"HKG1NW10001"},{"racku":41,"itag":"HKG1NW10002"},
+  {"racku":41,"itag":"HKG1NW10003"},{"racku":39,"itag":"HKG1NW10004"},
+  {"racku":39,"itag":"HKG1NW10005"},
+  .........
+  {"racku":42,"itag":"IB1NW10014"}]
+
+</pre>
+</li>
+<li>
+  <h4>relational Less Than Operator</h4>
+  <p>query to get itag and racku for network whose racku is less than 20</p>
+  <p> $ curl <a href='http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=racku<20&filter=racku,itag&type=network'>
+                'http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=racku&lt;20&filter=racku,itag&type=network'</a></p>
+                <pre class="prettyprint">
+                  [{"racku":1,"itag":"HKG1NW10006"},{"racku":1,"itag":"HKG1NW10007"},
+                  {"racku":6,"itag":"IB1NW10001"},{"racku":7,"itag":"IB1NW10002"},
+                  ......
+                  {"racku":"18-19","itag":"IB1NW10012"}]
+
+
+                </pre>
+</li>
+<li>
+  <h4>relational Greater Than or EqualToOperator</h4>
+  <p>query to get itag and racku for network whose racku is greater than or equal to 18</p>
+  <p> $ curl <a href='http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=racku>=18&filter=racku,itag&type=network'>
+      'http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=racku&gt;=18&filter=racku,itag&type=network'</a></p>
+  <pre class="prettyprint">
+    [{"racku":43,"itag":"HKG1NW10001"},{"racku":41,"itag":"HKG1NW10002"},
+    {"racku":41,"itag":"HKG1NW10003"},{"racku":39,"itag":"HKG1NW10004"},
+    .......
+    {"racku":42,"itag":"IB1NW10014"}]
+  </pre>
+</li>
+<li>
+  <h4>relational Lesser Than or EqualToOperator</h4>
+  <p>query to get itag and racku for network whose racku is lesser than or equal to 18</p>
+  <p> $ curl <a href='http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=racku<=18&filter=racku,itag&type=network'>
+                'http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=racku&lt;=18&filter=racku,itag&type=network'</a></p>
+                <pre class="prettyprint">
+                  [{"racku":1,"itag":"HKG1NW10006"},{"racku":1,"itag":"HKG1NW10007"},
+                  {"racku":6,"itag":"IB1NW10001"},{"racku":7,"itag":"IB1NW10002"},
+                  .......
+                  {"racku":"18-19","itag":"IB1NW10012"}]
+                </pre>
+</li>
+<li>
+  <h4>combination with ()</h4>
+  <p>query to get itag and hostname for machine in colo "ua2" or colo "hkg1" which hypervisor by defult type is 'server'</p>
+  <p>$ curl <a href='http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=(colo="ua2"|colo="hkg1")%26fqdn="hypr"&filter=itag,fqdn'>
+      'http://ims.corp.inmobi.com/ims/_design/collection/_list/collection/collection?ex=(colo="ua2"|colo="hkg1")%26fqdn="hypr"&filter=itag,fqdn'</a></p>
+  <pre class="prettyprint">
+    [{"itag":"HKG1SR10005","fqdn":"hypr4101.ops.hkg1.inmobi.com"},
+    {"itag":"HKG1SR10011","fqdn":"hypr4201.ops.hkg1.inmobi.com"},
+    {"itag":"HKG1SR10012","fqdn":"hypr4301.ops.hkg1.inmobi.com"},
+    ..........
+    {"itag":"UA2SR10001","fqdn":"hypr1001.ops.ua2.inmobi.com"},
+    {"itag":"UA2SR10034","fqdn":"hypr1006.ops.ua2.inmobi.com"}
+    ..........
+    {"itag":"UA2SR10255","fqdn":"hypr1010.ops.ua2.inmobi.com"}]
+  </pre>
+</li>
+</ul>
+</li>
+
+<h2>Reference</h2>
+
+<ul>
+  <li>
+    <p>To explore the internals of collection api, kindly refer <a href="https://github.corp.inmobi.com/platform-pe/ims-collection-api/blob/master/collection.js"
+                                                                   target="_blank">git repo</a>.</p>
+  </li>
+</ul>
+
+<h2>FAQ</h2>
+
+<h3>Where do I see list of all available attributes of each asset type?</h3>
+<p>For quick reference, you can <a href="http://ims.corp.inmobi.com/ims/_design/sa_reports/_view/all_attributes?group=true&reduce=true&startkey=[%22network%22,{}]&endkey=[%22server%22,{}]">view this</a>. We have a plan to show the list of all attributes on the Search UI itself.</p>
+<h3>How do I create a custom search?</h3>
+<p>We have only shown basic and simple combination on expression evalutation, by combine AND ,OR and paranthesessanyone can create any complex query to search</p>
+<h3>Is there a GUI tool on top of the Collection API?</h3>
+<p>Yes. <a href="http://ims.corp.inmobi.com/search/index.html">IMS Search UI (beta)</a> does it.</p>
+<h3>Is there a CLI tool on top of the Collection API?</h3>
+<p>We are currently working on a CLI tool for collection api <a href="https://jira.corp.inmobi.com/browse/IMS-214">jira</a></p>
+<p>Check out the <a href="http://ims.corp.inmobi.com/doc/index.html#FAQ">Mother-Of-All IMS FAQs</a></p>.
+</div><!--/span-->
+</div><!--/row-->
+</div><!--/.fluid-container-->
+<!-- Le javascript
+     ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="../js/jquery/jquery-1.8.3.min.js"></script> <script src="../js/jqueryui/jquery-ui-1.9.1.custom.min.js"></script> <script src="../js/bootstrap.js"></script> <script src="../js/jquery.tocify.min.js"></script> <script src="../js/prettify.js"></script> <script>
+  $(function() {
+
+  var toc = $("#toc").tocify({
+  selectors: "h2,h3,h4,h5"
+  }).data("toc-tocify");
+
+  prettyPrint();
+  $(".optionName").popover({ trigger: "hover" });
+
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+    "description": "Validate_Doc_Upadte Func to validate IDP doc in CouchDB",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "kanso": "*",
+        "kanso-utils": "*"
+    },
+    "devDependencies": {
+        "felix-couchdb": "*",
+        "jsonfile": "*",
+        "mocha": "*"
+    },
+    "scripts": {
+        "start": "node app.js"
+    },
+    "name": "ims-idp-validate",
+    "author": "sai.srinivasan <sai.srinivasan@inmobi.com>",
+    "homepage": ""
+}

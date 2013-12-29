@@ -1,0 +1,13 @@
+ {
+    "name": "ims",
+    "version": "0.0.1",
+    "description": "IMS",
+     "attachments": ["index.html","report.html","capacity_dashboard.html", "capacity_review.html","css","img","js","media","config"],
+    "modules": ["lib"],
+    "load" : "lib/app",
+    "dependencies": {
+        "attachments": null,
+        "modules": null,
+        "properties": null
+    }
+}

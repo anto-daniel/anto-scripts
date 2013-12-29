@@ -1,0 +1,299 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		
+		<title>IMS Capacity Dashboard</title>
+	
+		<link rel="stylesheet" type="text/css" href="/hackasino/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/hackasino/css/bootstrap-responsive.min.css">
+
+		<link rel="stylesheet" type="text/css" href="/hackasino/css/DT_bootstrap.css">
+  
+
+    <link rel="stylesheet" type="text/css" href="/hackasino/media/css/TableTools.css">
+    <link rel="stylesheet" type="text/css" href="/hackasino/media/css/TableTools_JUI.css">
+	
+		<link rel="stylesheet" type="text/css" href="/hackasino/css/general-styles.css">
+		<link rel="stylesheet" href="/hackasino/css/slider.css">
+		<script type="text/javascript" language="javascript" src="/hackasino/js/jquery-1.10.2.min.js"></script>
+   
+		<script type="text/javascript" language="javascript" src="/hackasino/js/bootstrap.js"></script>
+
+		<script type="text/javascript" language="javascript" src="/hackasino/js/jquery.dataTables.js"></script>
+    <script src="/hackasino/js/bootstrap-tour.js" type="text/javascript"></script>
+    <script type="text/javascript" language="javascript" src="js/DT_bootstrap.js"></script>
+    
+    <script type="text/javascript" src="/hackasino/media/js/TableTools.js"></script>
+    <script type="text/javascript" src="/hackasino/media/js/ZeroClipboard.js"></script>
+  
+     <script type="text/javascript" src="/hackasino/js/capasity-dash.js"></script>
+     <script type="text/javascript" language="javascript" src="/hackasino/js/bootstrap-slider.js"></script>
+     <script type="text/javascript" src="/hackasino/js/property.js"></script>
+     <link href="/hackasino/css/bootstrap-tour.css" rel="stylesheet">
+     <script>
+ 
+  $(function() {
+      
+      $("#myslider").slider();
+      $(".slider-handle").each(function (k, el) {$(el).addClass('sliderhandle' + k); console.log('sliderhandle' + k);});
+      $("#myslider").slider().on('slideStop',function(ev){
+	  load_Data(ev['value'][0],ev['value'][1]);
+          
+      });
+
+
+
+  });
+  </script>
+
+	</head>
+	<body>
+  <!-- Navbar Unit ----------------------------------------------------------------------------------------- -->
+		
+    <div class="navbar  navbar-fixed-top navbar-inverse">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="index.html"><div id='ims'><b>IMS</b></div></a>
+                <div class="nav-collapse collapse">
+           
+                    <ul class="nav">
+                        <li class="">
+                          <a id="home" href="./report.html">Reports</a>
+                        </li>
+                        <li class="active">
+                          <a href="./capacity_dashboard.html">Capacity Dashboard</a>
+                        </li>
+                        <li class="dropdown">
+			  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+			  <ul class="dropdown-menu">
+			    <li><a href="doc/index.html" target="_bClaimlank">Getting Started Guide</a></li>
+			    <li><a href="doc/idp.html" target="_balnk">User Guide for IDP</a></li>
+			  </ul>
+			</li>
+			<li class="right"><a href="#" id="demo">Demo</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar Unit ----------------------------------------------------------------------------------------- -->
+
+    <div class="row global-container">
+    <div class="row-fluid">
+
+      <div class="span12">
+    
+
+     <!--   <div class="tabbable"> 
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#all-asset" data-toggle="tab">Assets Inventory</a></li>
+            <li><a href="#unused-asset" data-toggle="tab">Unused Assets</a></li>
+            <li><a href="#released-asset" data-toggle="tab">Released Assets</a></li>
+          </ul>
+          <div class="tab-content">
+            <div id="all-asset" class="tab-pane active"><div id="all-asset-table-c"></div></div>
+            <div id="unused-asset" class="tab-pane"><div id="unused-asset-table-c"></div></div>
+            <div id="released-asset" class="tab-pane"><div id="released-asset-table-c"></div></div>
+          </div>
+        </div> 
+      </div>
+    -->
+
+      <div id="tabs"> 
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#unused-asset"><b>Under Utilisied Servers</b></a></li>
+            <li><a href="#released-asset"><b>Unused Servers</b></a></li>
+            
+          </ul>
+
+          <div class="tab-content">
+            <div id="unused-asset" >
+              
+               
+                  <center>
+		    <div class="row">
+		      <div class="span6 right">
+			<div id="myslider-min"></div>
+		      </div>
+		      <div class="span6">
+			<div id="myslider-max"></div>
+		      </div>
+		    </div>
+
+                <div class="sliderarea container">
+                  
+                    <div class="span1">Unused</div>
+                    <div class="span10 left-to-right"><input id="myslider" class="span10" type="text" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="[0,100]" data-slide\
+r-orientation="horizontal" data-slider-selection="after" data-slider-tooltip="show"></div>
+                    <div class="span1">Overused</div>
+                  
+                </div>
+              </center>
+
+<div id="unused-asset-table-c">
+
+<!--
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-bordered table-hover" id="unused-asset-table">
+                  <thead>
+                    <th></th>
+                    <th>Hostname</th>
+                    <th>Property</th>
+                    <th>Type</th>
+                    <th>Manufacturer</th>
+                    <th>RAM</th>
+                    <th>Physical Processor Count</th>
+                    <th>Number of Cores</th>
+                    <th>Avg. Memory Utilisation(%)</th>
+                    <th>Avg. Cpu Utilisation(%)</th>
+                    <th>Net Avg. Utilisation</th>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+                -->
+                </div>
+            </div>
+            <div id="released-asset" ><div id="released-asset-table-c"></div></div>
+            </div>
+          </div>
+        
+      </div>
+<!--      <center>
+        <button class="btn btn-primary btn-lg claim" data-toggle="modal" data-target="#myModal">
+  Claim
+</button>
+<div id="s"></div>
+
+      </center> 
+     <!-- Modal -->
+<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        
+      </div>
+      <div class="modal-body">
+       
+ <div class="well">
+<h4>What would you like to do?</h4>
+<form id="register-form">
+<label class="radio">
+  <input type="radio" name="optionsRadios" value="Review" checked>
+  <h5>Review</h5> We will improve the performance of this machine. Please review us after <select id="sl"><option>1 week</option><option>1 month</option></select>
+</label> 
+<label class="radio">
+
+  <input type="radio" name="optionsRadios"  value="Reserved" >
+  <h5>Reserved</h5> This host is under utilized for a reason.
+   <br>
+</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="reason_text"></span>
+
+<label class="radio">
+  <input type="radio" name="optionsRadios"  value="Release">
+  <h5>Release</h5> We no longer need these hosts.
+</label>
+<script>
+
+//get_teams();
+
+</script> 
+
+<h5>What's your team?</h5>
+<input type="text" id="search" name="owner"/>  
+           
+             </br>
+             <input type="button" class="btn btn-success" value="submit" onclick="passtodb()"/>
+             
+              <a href="#" class="btn" data-dismiss="modal">Close</a>
+            
+          </div>
+
+</div>
+
+
+
+
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--        <div class="span3 level2-2">
+    <div id="cost-board">
+      <table class="table cost-table">
+        <tr>
+          <td class="cost-item">Total Saved</td>
+          <td><b>$2580</b></td>
+        </tr>
+        <tr>
+          <td class="cost-item">Saved Current Month</td>
+          <td><b>$420</b></td>
+        </tr>
+        <tr>
+          <td class="cost-item">Expected Savings Next Month</td>
+          <td><b>$890</b></td>
+        </tr>
+      </table>
+      
+
+    </div>
+
+    <div id="accordion">
+
+  <h5>Savings By Colo</h5>
+  <div>
+    <p>
+    Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+    ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+    amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+    odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+    </p>
+  </div>
+  <h5>Savings By Team</h5>
+  <div>
+    <p>
+    Sed non urna. Donec et ante. Phasellus eu ligula. Vestibulum sit amet
+    purus. Vivamus hendrerit, dolor at aliquet laoreet, mauris turpis porttitor
+    velit, faucibus interdum tellus libero ac justo. Vivamus non quam. In
+    suscipit faucibus urna.
+    </p>
+  </div>
+  <h5>Savings By Month</h5>
+  <div>
+    <p>
+    Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
+    Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
+    ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
+    lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
+    </p>
+  </div>
+  </ul>
+ 
+</div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+    	<div class="navbar navbar-fixed-bottom footer">
+  			<div class="navbar-inner">
+        	    <div class="container" style="padding-top:2px">
+                   
+            	   
+            	<a style="font-size:13px">Report Bug</a>   
+            	</div>
+      	    </div>
+		</div>
+    </div>
+!-->
+    <script src="/hackasino/js/bootstrap-tooltip.js"></script>
+    <script src="/hackasino/js/bootstrap-popover.js"></script>
+    <script src="/hackasino/js/bootstrap-tour.js"></script>
+    <script src="/hackasino/js/hackasino-tour.js"></script>
+	</body>
+</html>
+		

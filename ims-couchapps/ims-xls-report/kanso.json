@@ -1,0 +1,12 @@
+{
+    "name": "infra-xls-view",
+    "version": "0.0.1",
+    "description": "summary of physical assets",
+    "modules": ["lib"],
+    "load": "lib/app",
+    "dependencies": {
+        "attachments": null,
+        "modules": null,
+        "properties": null
+    }
+}

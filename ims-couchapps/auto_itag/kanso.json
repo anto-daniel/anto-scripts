@@ -1,0 +1,12 @@
+{"name" : "auto_itag",
+ "version": "0.0.1",
+ "description": "create automatic itag for vm",
+ "modules":["lib"],
+ "load":"lib/auto_itag",
+ "dependencies": {
+    "attachments": null,	
+    "modules" : null,
+    "properties":null
+  }
+}
+

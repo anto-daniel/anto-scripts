@@ -1,0 +1,12 @@
+{
+   "name": "kanso-utils",
+   "version": "0.1.2",
+   "description": "NPM package which provides some common utility functions used by build-steps in Kanso packages",
+   "dependencies": {
+	"kanso": "*",
+	"kanso-utils": "0.1.6"
+   },
+   "repository": {
+   }
+}
+

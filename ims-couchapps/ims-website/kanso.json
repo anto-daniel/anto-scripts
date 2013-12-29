@@ -1,0 +1,9 @@
+{
+    "name": "ims_website",
+    "version": "0.0.1",
+    "description": "ims.corp website",
+    "attachments": ["index.html", "css", "js", "img", "doc"],
+    "dependencies": {
+        "attachments": null
+    }
+}

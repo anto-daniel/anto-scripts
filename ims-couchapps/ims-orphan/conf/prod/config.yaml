@@ -1,0 +1,6 @@
+host: ims.corp.inmobi.com
+port: 5984
+dbuser: imsadmin
+dbpass: imsadmin
+db: orphan
+

@@ -1,0 +1,11 @@
+{"name" : "orphan",
+ "version": "0.0.1",
+ "description": "view virtual machine",
+ "modules":["lib"],
+ "load":"lib/view",
+ "dependencies": {
+    "attachments": null,	
+    "modules" : null,
+    "properties":null
+  }
+}

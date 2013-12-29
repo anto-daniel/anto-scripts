@@ -1,0 +1,328 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		
+		<title>IMS Capacity Dashboard</title>
+	
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css">
+
+		<link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="media/css/TableTools.css">
+    <link rel="stylesheet" type="text/css" href="media/css/TableTools_JUI.css">
+	
+		<link rel="stylesheet" type="text/css" href="css/general-styles.css">
+    <link rel="stylesheet" href="css/jquery-ui-1.10.0.custom.css" />
+
+		<script type="text/javascript" language="javascript" src="js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" language="javascript" src="js/jquery-ui.js"></script>
+		<script type="text/javascript" language="javascript" src="js/bootstrap.js"></script>
+
+		<script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
+    <script type="text/javascript" language="javascript" src="js/DT_bootstrap.js"></script>
+    <script type="text/javascript" src="media/js/TableTools.js"></script>
+    <script type="text/javascript" src="media/js/ZeroClipboard.js"></script>
+    <script type="text/javascript" src="js/jquery-events.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+   
+
+	</head>
+	<body>
+  <!-- Navbar Unit ----------------------------------------------------------------------------------------- -->
+		
+    <div class="navbar  navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="index.html"><div id='ims'><b>IMS</b></div></a>
+                <div class="nav-collapse collapse">
+           
+                    <ul class="nav">
+                        <li class="">
+                          <a id="home" href="./report.html">Reports</a>
+                        </li>
+                        <li class="active">
+                          <a href="./capasity_dashboard.html">Capacity Dashboard</a>
+                        </li>
+                        <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="doc/index.html" target="_blank">Getting Started Guide</a></li>
+                    <li><a href="doc/idp.html" target="_balnk">User Guide for IDP</a></li>
+                  </ul>
+                </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar Unit ----------------------------------------------------------------------------------------- -->
+
+    <div class="row-fluid global-container">
+   
+      <div class="span12">
+      <div class="span6"><div id="container" class="graph" style="min-width: 310px; margin: 0 auto"></div></div>
+      <div class="span6"><div id="container2" class="graph" style="min-width: 310px; margin: 0 auto"></div></div>
+      </div>
+      
+      <div class="span4 graph"><div id="container3"  ></div></div>
+      <div class="span4 graph"><div id="container4"  ></div></div>
+      <div class="span4 graph"><div id="container5"  ></div></div>
+    
+    	<div class="navbar navbar-fixed-bottom footer">
+  			<div class="navbar-inner">
+        	    <div class="container" style="padding-top:2px">
+                   
+            	   
+            	<a style="font-size:13px">Report Bug</a>   
+            	</div>
+      	    </div>
+		</div>
+    </div>
+
+    <script type="text/javascript">
+      $(function () {
+        $('#container').highcharts({
+            title: {
+                text: 'Monthly Average Temperature',
+                x: -20 //center
+            },
+            subtitle: {
+                text: 'Source: WorldClimate.com',
+                x: -20
+            },
+            xAxis: {
+                categories: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Dollars ($)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '°C'
+            },
+            credits: {
+            enabled: false
+        },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Tokyo',
+                data: [2560, 2310, 1970, 1640, 1860]
+            }, {
+                name: 'New York',
+                data: [0.2, 0.8, 5.7, 11.3, 17.0]
+            }]
+        });
+
+/////////////////////////
+$('#container2').highcharts({
+            title: {
+                text: 'Monthly Average Temperature',
+                x: -20 //center
+            },
+            subtitle: {
+                text: 'Source: WorldClimate.com',
+                x: -20
+            },
+            xAxis: {
+                categories: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            },
+            yAxis: {
+                title: {
+                    text: 'Dollars ($)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '°C'
+            },
+            credits: {
+            enabled: false
+        },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Tokyo',
+                data: [2560, 2310, 1970, 1640, 1860]
+            }, {
+                name: 'New York',
+                data: [0.2, 0.8, 5.7, 11.3, 17.0]
+            }]
+        });
+    });
+   ///////////////////
+   $(function () {
+    var chart;
+    
+    $(document).ready(function () {
+      
+      // Build the chart
+        $('#container3').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Underutilised Hosts By Colo'
+            },
+            tooltip: {
+              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['Firefox',   45.0],
+                    ['IE',       26.8],
+                    {
+                        name: 'Chrome',
+                        y: 12.8,
+                        sliced: true,
+                        selected: true
+                    },
+                    ['Safari',    8.5],
+                    ['Opera',     6.2],
+                    ['Others',   0.7]
+                ]
+            }]
+        });
+    });
+    
+}); 
+////////////////////////////
+ $(function () {
+    var chart;
+    
+    $(document).ready(function () {
+      
+      // Build the chart
+        $('#container4').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Browser market shares at a '
+            },
+            tooltip: {
+              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['Firefox',   45.0],
+                    ['IE',       26.8],
+                    {
+                        name: 'Chrome',
+                        y: 12.8,
+                        sliced: true,
+                        selected: true
+                    },
+                    ['Safari',    8.5],
+                    ['Opera',     6.2],
+                    ['Others',   0.7]
+                ]
+            }]
+        });
+    });
+    
+}); 
+////////////////////////////
+ $(function () {
+    var chart;
+    
+    $(document).ready(function () {
+      
+      // Build the chart
+        $('#container5').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Browser market shares at '
+            },
+            tooltip: {
+              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: 'Browser share',
+                data: [
+                    ['Firefox',   45.0],
+                    ['IE',       26.8],
+                    {
+                        name: 'Chrome',
+                        y: 12.8,
+                        sliced: true,
+                        selected: true
+                    },
+                    ['Safari',    8.5],
+                    ['Opera',     6.2],
+                    ['Others',   0.7]
+                ]
+            }]
+        });
+    });
+    
+}); 
+    </script>
+
+	</body>
+</html>
+		

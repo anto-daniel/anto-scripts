@@ -1,0 +1,11 @@
+{
+    "name": "ims_widget_reports",
+    "version": "0.0.1",
+    "description": "collection of views based on different group-by params to form the various widgets of ims-dashboard",
+    "modules": ["lib"],
+    "load": "lib/app",
+    "dependencies": {
+        "modules": null,
+        "properties": null
+    }
+}

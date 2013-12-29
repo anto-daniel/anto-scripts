@@ -1,0 +1,15 @@
+{
+   "name": "auto-itag",
+   "version": "0.0.1",
+   "description": "consist of function related to ims auto_itag",
+   "dependencies": {
+	"kanso": "*",
+	"kanso-utils": "0.1.6",
+	"felix-couchdb" : "*",
+	"jsonfile" : "*",
+	"mocha" : "*"
+   },
+   "repository": {
+   }
+}
+

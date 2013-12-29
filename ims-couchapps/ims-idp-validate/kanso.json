@@ -1,0 +1,11 @@
+{
+ "name":"idp_validate",
+ "version":"0.0.1",
+ "description":"idp_validate design doc to validate IDP documents",
+ "modules":["lib"],
+ "load":"lib/app",
+ "dependencies":{
+   "modules":null,
+   "properties":null
+ }
+}

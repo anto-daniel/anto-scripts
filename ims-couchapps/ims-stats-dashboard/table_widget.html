@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>IMS Stats Table</title>
+</head>
+
+<body>
+  <!--jQuery Plugin Import-->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://datatables.net/download/build/jquery.dataTables.js"></script>
+
+  <!--Data Table CSS-->
+  <link rel="stylesheet" href="CSS/jquery.dataTables.css"></link>
+
+  <h3>IMS Hardware Profile Classification</h3> 
+
+  <!--div container for DataTable-->
+  <div id="display"></div>
+
+  <script>
+  $("#display").html("IMS Stats Table is Loading...");
+
+  //jQuery Call to CouchDB View 
+  var uri = "http://ims.corp.inmobi.com:5984/ims/_design/ims_widget_reports/_view/hardware_profile_classification?group=true";
+
+  $.ajax({
+    type: 'GET',
+    headers: {'Content-Type': "application/json"},
+    url: uri
+  })
+    .done(function (response) {
+
+      var res = JSON.parse(response);
+      var data = res["rows"];
+      var total_specs = [];
+
+      //Processing JSON response returned by the CouchDB view
+      data.forEach(function (dat) {
+        var unique_spec = [];
+
+        var keys = Object.keys(dat["key"]);
+        keys.forEach(function (k) {
+          unique_spec.push(dat["key"][k]);
+
+        });
+
+        //unique spec returned by CouchDB reduced view
+        unique_spec.push(dat["value"]);
+
+        unique_spec.push(JSON.stringify(dat["key"]));
+        // Collection of all the unique specs 
+        total_specs.push(unique_spec);
+      });
+
+      var display_data = {};
+
+      //Column Headers for DataTable
+      var col_arr = [
+
+        {
+          "sTitle": "CPU Count",
+          "sClass": "center"
+        }, {
+          "sTitle": "CPU Model"
+        }, {
+          "sTitle": "Total Memory",
+          "sClass": "center"
+        }, {
+          "sTitle": "Disk Count",
+          "sClass": "center"
+        }, {
+          "sTitle": "Total Disk Size",
+          "sClass": "center"
+        }, {
+          "sTitle": "Vendor"
+        }, {
+          "sTitle": "Server Model"
+        }, {
+          "sTitle": "Total Machine Count",
+          "sClass": "center"
+        }, {
+          "sTitle": "Save Profile",
+          "sClass": "center"
+        }
+      ];
+
+      //Converting the raw JSON into required DataTable Format
+      display_data["aaData"] = total_specs;
+      console.log(display_data);
+      display_data["aoColumns"] = col_arr;
+      display_data["aoColumnDefs"] = [{
+        aTargets: [8],
+
+        fnRender: function (o, v) {
+          return '<input type="checkbox" class="save" name="someCheckbox" value=' + v + ' />';
+        },
+        sClass: 'tableCell'
+      }];
+
+      /* Init the table */
+      $('#display').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="data-table"></table>');
+      $('#data-table').dataTable(display_data);
+
+
+    });
+
+  function get_selected_rows() {
+    var values = $('input:checkbox:checked.save').map(function () {
+      return this.value;
+    }).get();
+    return values;
+  }
+  </script>
+</body>
+</html>

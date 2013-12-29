@@ -1,0 +1,6 @@
+#! /bin/bash
+
+cd /usr/local/share/ims-couchapps/InfraReports
+npm install
+./node_modules/kanso/bin/kanso install
+./node_modules/kanso/bin/kanso push http://imsadmin:imsadmin@localhost:5984/testdb

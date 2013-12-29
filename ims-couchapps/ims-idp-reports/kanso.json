@@ -1,0 +1,12 @@
+{
+    "name": "idp_reports",
+    "version": "0.0.1",
+    "description": "ims idp reports",
+    "modules": ["lib"],
+    "load": "lib/app",
+    "dependencies": {
+        "attachments": null,
+        "modules": null,
+        "properties": null
+    }
+}

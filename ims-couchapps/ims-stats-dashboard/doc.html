@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+
+    <title>How to Guide</title>
+
+    <!-- Le styles -->
+    <link href="CSS/bootstrap.min.css" rel="stylesheet">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/black-tie/jquery-ui.css" rel="stylesheet">
+    <link href="CSS/jquery.tocify.css" rel="stylesheet">
+    <link href="CSS/prettify.css" rel="stylesheet" type="text/css">
+
+    <!--BootStrap CSS-->
+    <link rel="stylesheet" href="CSS/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="CSS/bootstrap-responsive.min.css"></link>
+
+    <!--Bootstrap JS-->
+    <script src="JS/bootstrap.js"></script>
+
+    <style>
+        body {
+            padding-top: 20px;
+        }
+        p {
+            font-size: 16px;
+        }
+        .headerDoc {
+            color: #005580;
+        }
+        @media (max-width: 767px) {
+            #toc {
+                position: relative;
+                width: 100%;
+                margin: 0px 0px 20px 0px;
+            }
+        }
+        #view {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #view td,
+        #view th {
+            font-size: 1em;
+            border: 1px solid #3333FF;
+            padding: 3px 7px 2px 7px;
+        }
+        #view th {
+            font-size: 1.1em;
+            text-align: left;
+            padding-top: 5px;
+            padding-bottom: 4px;
+            background-color: #5959FF;
+            color: #ffffff;
+        }
+        #view tr.alt td {
+            color: #000000;
+            background-color: #EBEBE0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!--Menu Conatiner-->
+    <div id="Nav-Bar">
+        <div class="navbar  navbar-fixed-top navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="http://ims.corp.inmobi.com/" target="_blank">
+                        <div id='ims'><b>IMS</b>
+                        </div>
+                    </a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li><a href="index.html">Reliability Dashboard</a>
+                            </li>
+                            <li class="active"><a href="doc.html">Docs</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End of Menu-->
+
+
+    <div style="margin: 50px 30px auto 30px" class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3">
+                <div id="toc"></div>
+            </div>
+            <div class="span9">
+                <div class="hero-unit">
+                    <h1>Reliability Dashboard</h1> 
+                    <br>
+
+                    <h2>About</h2>
+
+                    <div class="github-widget" data-repo="gfranko/jquery.tocify.js"></div>
+                    <br>
+
+                    <p>This guide will help users to visualize and perceive assets through the eyes of IMS.</p>
+                </div>
+
+                <h2>Scope</h2>
+
+                <p>In this first release of IMS Reliability Dashboard , we enable users to visualize various categories of reliability as defined by IMS</p>
+
+                <h2>Components</h2>
+                <p>The basic idea of presenting this view is to ensure that all inmobi assets are under the radar of IMS, which eventually will act as the central source of truth & data store for all the assets.</p>
+                <ul>
+                    <li>
+                        <h4>Global IMS Pie View</h4>
+                        <p>The pie view will present all the categories of reliability as defined by IMS along with contribution of assets (%) for each category. Further drill down is also possible for a selected category.</p>
+                    </li>
+                    <li>
+                        <h4>Global IMS Asset Table</h4>
+                        <p>The Asset Table will present pre-defined attributes (i.e. Itag,Fqdn,Macid and IP) along wit the category of reliability tagged to it. This a global list of all the assets present in IMS. Further details can be fetched by clicking
+                            on the Itag URL.
+                        </p>
+                    </li>
+                </ul>
+
+
+                <h2>Categories of Reliability</h2>
+                <p>Various levels of reliability as defined by IMS is categorized on the following basis,</p>
+                <h4>Criteria used for classification:</h4>
+                <ul>
+                    <li>
+                        <p>Are mandatory fields present?</p>
+                    </li>
+                    <li>
+                        <p>Is latest version of IMS agent installed?</p>
+                    </li>
+                    <li>
+                        <p>Is IMS agent active?</p>
+                    </li>
+                    <li>
+                        <p>Physical or Virtual?</p>
+                    </li>
+                </ul>
+
+                <p><b>Based on the above criteria we have the following categories of reliability,</b>
+                </p>
+                <table id="view">
+                    <tr>
+                        <th>Category</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td rowspan="4">
+                            Valid Physical
+                            <br/>Valid VM
+                            <br/>Valid Storage
+                            <br/>Valid Network
+                        </td>
+                        <td rowspan="4">Assets with manadatory fields and which are upto date</td>
+                    </tr>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr  class="alt">
+                        <td rowspan="3">Valid Service<br/>
+                        Valid Environment<br/>
+                        Valid Cluster
+                        </td>
+                        <td rowspan="3">IDP assets</td>
+                    </tr>
+                    <tr></tr>
+                    <tr></tr>
+                    <tr>
+                        <td>Investigate-L1</td>
+                        <td>Assets with partial details, where ims agent needs to be installed</td>
+                    </tr>
+                    <tr class="alt">
+                        <td>Investigat-L2</td>
+                        <td>Assets with stale/buggy information, where old version of ims agent is running</td>
+                    </tr>
+                    <tr>
+                        <td>Invalid Physical</td>
+                        <td>Physical Servers without mandatory fields (i.e. Itag, Macid, Servername)</td>
+                    </tr>
+                    <tr class="alt">
+                        <td>Invalid</td>
+                        <td>Unclassified records</td>
+                    </tr>
+                    <tr>
+                        <td>In Progress Physical</td>
+                        <td>Physical servers which are commissioned</td>
+                    </tr>
+                    <tr class="alt">
+                        <td>IMS Assets</td>
+                        <td>Assets which are internal to IMS</td>
+                    </tr>
+                    <tr>
+                        <td>Others</td>
+                        <td>Miscellaneous assets</td>
+                    </tr>
+                </table>
+
+                <h2>How To's</h2>
+
+                <p>On page load the complete pie view and global data table is presented without any category being selected by default. You can toggle between Global DataTable and Pie Table by selecting & unselecting a category respectively. To select a
+                    category do MouseClick on the desired item and to unselect again do MouseClick on the selected item.
+
+                    <p>Note: At present, you cannot toggle between pie category without unselection.</p>
+
+                </p>
+                <b><p>The varoius user interaction with the Pie View & DataTable is highlighted below.</p></b>
+                <ol>
+                    <li>
+                        <h3>Interaction with Pie View</h3> 
+                        <ul>
+                            <li>
+                                <h4>MouseOver on a Pie Category</h4>
+                                <p>MouseOver on each pie to view the description of the selected category.</p>
+                            </li>
+                            <li>
+                                <h4>MouseClick on a Pie Category</h4>
+                                <p>MouseClick on each pie to view the asset details of the selected category.</p>
+                            </li>
+                            <li>
+                                <h4>Export Options</h4>
+                                <p>Click the options button in the top right corner of the pie view to export the chart as an image (PNG, JPEG) or PDF.</p>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <h3>Interaction with Table View</h3>
+                        <ul>
+                            <li>
+                                <h4>Search Assets</h4>
+                                <p>Use the search bar in the table view to search for asset(s) based on preset filters (i.e. Itag, Fqdn, Macid and IP).</p>
+                            </li>
+                            <li>
+                                <h4>Filter Records</h4>
+                                <p>Use the select box to filter number of records to be displayed per page (10 rows per page by default). Also click on the column header to sort the records based on the selected column field both in ascending &descending
+                                    order.</p>
+                            </li>
+                            <li>
+                                <h4>Detailed Asset View</h4>
+                                <p>Click on the Itag URL wherever visible to get greater details about the chosen asset.</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h2>How to make your asset reliable?</h2>
+
+                <p>If you find your asset(s) in any of the unreliable categories, then the next steps to make it reliable are outlined,
+                    <br>
+                </p>
+
+                <ul>
+                    <li>
+                        <p>if you are using puppet, check if it is broken or is there any other issue caused by it. <a href="mailto:ims-dev@inmobi.com">Contact Us</a> for help</p>
+                    </li>
+
+                    <li>
+                        <p>If you are not using puppet, kindly follow the instructions given below</p>
+
+                        <ol>
+                            <li>
+                                <h4>Setup apt/yum repo</h4>
+
+                                <ul>
+                                    <li>
+                                        <p>Configure <a href="http://repo.corp.inmobi.com:9999/multiverrepo/dist/" target="_blank">apt</a>/
+                                            <a href="http://repo.corp.inmobi.com:9999/yum/inmobi/" target="_blank">yum</a> repo locally</p>
+                                    </li>
+
+                                    <li>
+                                        <p>Issue the following commands to manually install ims agent,</p>
+                                        <pre class="prettyprint">
+For Ubuntu,<br>sudo apt-get update<br>sudo apt-get upgrade<br>sudo apt-get install ims-facter
+</pre>
+                                        <pre class="prettyprint">
+For CentOS,<br>sudo yum update<br>sudo yum install ims-facter
+</pre>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <h4>Download &amp; Install Packages</h4>
+
+                                <ul>
+                                    <li>
+                                        <p>Download the following packages and dependencies
+                                            <br>
+                                        </p>
+
+                                        <h4>Ubuntu Distro</h4>
+
+
+
+                                        <ol>
+                                            <h5>Dependencies</h5>
+                                            <li><a href="https://launchpad.net/ubuntu/precise/+source/facter/1.6.5-1ubuntu1.2/+files/facter_1.6.5-1ubuntu1.2.debian.tar.gz" target="_blank">facter</a>
+                                            </li>
+
+                                            <li><a href="http://repo.corp.inmobi.com:9999/multiverrepo/dist/inmobi-daemontools_0.3.3_all.deb" target="_blank">daemontools</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="http://kambing.vlsm.org/ubuntu/pool/universe/d/daemontools/daemontools-run_0.76-3ubuntu2_all.deb" target="_blank">daemontools-run</a>
+
+
+                                            </li>
+                                            <h5>Packages</h5>
+                                            <li><a href="http://repo.corp.inmobi.com:9999/multiverrepo/dist/ims-nodejs_0.10.20_amd64.deb" target="_blank">ims-nodejs</a>
+                                            </li>
+
+                                            <li><a href="http://repo.corp.inmobi.com:9999/multiverrepo/dist/ims-facter_2.3.0_all.deb" target="_blank">ims-facter</a>
+                                            </li>
+                                        </ol>
+                                        <br>
+
+                                        <h4>CentOS Distro</h4>
+
+
+
+                                        <ol>
+                                            <h5>Dependencies</h5>
+                                            <li><a href="http://repo.corp.inmobi.com:9999/yum/inmobi/facter-1.6.5-1.el5.noarch.rpm" target="_blank">facter</a>
+                                            </li>
+
+                                            <li><a href="http://repo.corp.inmobi.com:9999/yum/inmobi/inmobi-daemontools-0.3.3-1.noarch.rpm" target="_blank">daemontools</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="daemontools-run-0.0.4-1.noarch.rpm" target="_blank">daemontools-run</a>
+
+
+                                            </li>
+                                            <h5>Packages</h5>
+                                            <li><a href="http://repo.corp.inmobi.com:9999/yum/inmobi/ims-nodejs-0.10.18-1.x86_64.rpm" target="_blank">ims-nodejs</a>
+                                            </li>
+
+                                            <li><a href="http://repo.corp.inmobi.com:9999/yum/inmobi/ims-facter-2.3.0-1.noarch.rpm" target="_blank">ims-facter</a>
+                                            </li>
+                                        </ol><br/>
+                                    </li>
+
+                                    <li>
+                                        <p>Manually install the downloaded packages with dependencies.
+                                            <br/>
+                                            <br/>Issue the following command to install the same
+                                            <br/> <pre class="prettyprint">
+For Ubuntu,<br>sudo dpkg -i *.deb
+</pre>
+                                            <pre class="prettyprint">
+For CentOS,<br>sudo rpm -Uvh *.rpm
+</pre>
+                                        </p>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </li>
+                </ul>
+
+                </p>
+                <h2>Reference</h2>
+                <ul>
+                    <li>
+                        <p>To explore the internals of how the various classification of reliability is arrived, kindly refer <a href="https://github.corp.inmobi.com/platform-pe/ims-couchapps/blob/master/ims-asset-reports/lib/app.js" target="_blank">git repo</a>.</p>
+                    </li>
+                </ul>
+                <h2>FAQ</h2>
+
+                <h3>Have a question not answered here?</h3>
+                <p>Check out the <a href="http://ims.corp.inmobi.com/doc/index.html#FAQ">Mother-Of-All IMS FAQs</a>
+                </p>.
+            </div>
+            <!--/span-->
+        </div>
+        <!--/row-->
+    </div>
+    <!--/.fluid-container-->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="JS/jquery-1.8.3.min.js"></script>
+    <script src="JS/jquery-ui-1.9.1.custom.min.js"></script>
+    <script src="JS/bootstrap.js"></script>
+    <script src="JS/jquery.tocify.min.js"></script>
+    <script src="JS/prettify.js"></script>
+    <script>
+        $(function () {
+
+            var toc = $("#toc").tocify({
+                selectors: "h2,h3,h4,h5"
+            }).data("toc-tocify");
+
+            prettyPrint();
+            $(".optionName").popover({
+                trigger: "hover"
+            });
+
+        });
+    </script>
+</body>
+</html>

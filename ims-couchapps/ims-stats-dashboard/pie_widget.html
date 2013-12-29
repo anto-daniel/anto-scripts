@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>IMS Asset Classification</title>
+</head>
+
+<body>
+
+    <!--CSS Files-->
+
+    <!--Pie CSS-->
+    <link rel="stylesheet" href="CSS/pie.css"></link>
+
+    <!--DataTable CSS-->
+    <link rel="stylesheet" href="CSS/jquery.dataTables.css"></link>
+
+    <!--BootStrap CSS-->
+    <link rel="stylesheet" href="CSS/bootstrap.min.css"></link>
+    <link rel="stylesheet" href="CSS/bootstrap-responsive.min.css"></link>
+
+    <!--Plugin Import-->
+
+    <!--jQuery-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <!--Bootstrap-->
+    <script src="JS/bootstrap.js"></script>
+    
+    <!--DataTables-->
+    <script src="http://datatables.net/download/build/jquery.dataTables.js"></script>
+
+    <!--HighCharts-->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script src="JS/pieTheme.js"></script>
+
+    <!--Menu Conatiner-->
+    <div id="Nav-Bar">
+        <div class="navbar  navbar-fixed-top navbar-inverse">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="http://ims.corp.inmobi.com/" target="_blank"><div id='ims'><b>IMS</b></div></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="pie_widget.html">Reliability Dashboard</a></li>
+                            <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="http://ims.corp.inmobi.com/doc/index.html" target="_bClaimlank">Getting Started Guide</a></li>
+                                    <li><a href="" target="_balnk">User Guide for IDP</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                                      
+    <!--Main Conatiner-->
+    <div id="main-container">
+        <!--div container for PieChart-->
+        <div id="container"></div>
+        <!--div container for PieChart description-->
+        <div id="reporting"></div>
+        <!--div container for DataTable header-->
+        <div id="header"></div>
+        <!--div container for pie DataTable-->
+        <div id="display"></div>
+    </div>
+
+    <!--Logic to form the pis-chart visualization-->
+    <script>
+        $("#container").html("IMS Stats Chart is Loading...");
+        var uri = "http://ims.corp.inmobi.com/ims/_design/ims_asset_report/_view/ims_asset_classification?group=true";
+        $.ajax({
+            type: 'GET',
+            headers: {
+                'Content-Type': "application/json"
+            },
+            url: uri
+        })
+            .done(function (response) {
+
+                var $reporting = $('#reporting');
+                var $data = $('#data');
+                var res = JSON.parse(response);
+                var stats = res["rows"];
+                var series_data = [];
+                var ast_details = {};
+                var req_arr = [];
+
+                stats.forEach(function (stat) {
+
+                    //Data Input for Pie-Chart 
+                    req_arr.push([stat["key"][0], stat["value"]]);
+
+                    //Brief Description for each Pie-Category
+                    ast_details[stat["key"][0]] = stat["key"][1];
+
+                });
+
+                //Custom Color Hash for Logically Valid Category 
+                var getColor = {
+                    'Valid Physical': '#66FF66',
+                    'Valid VM': '#47B247',
+                    'Valid Network': '#C2FFC2',
+                    'Valid Storage': '#5CE65C',
+                    'Investigate-L1': '#D14719',
+                    'Investigate-L2': '#FF9933',
+                    'Invalid Physical': '#FF8080',
+                    'Invalid Asset': '#FF0000',
+                    'Ims Asset': '#FF9900',
+                    'In Progress Physical': '#FF3300',
+                };
+
+                //Sorted Data Set for Pie-Chart
+                req_arr.sort(function (a, b) {
+                    return a[1] - b[1]
+                });
+
+                //Intermediate Data
+                valid_arr = [];
+                invalid_arr = [];
+                valid_color_arr = [];
+                invalid_color_arr = [];
+
+                req_arr.forEach(function (e) {
+                    if (e[0].indexOf("Valid") == 0) {
+                        valid_arr.push(e);
+                    } else {
+                        invalid_arr.push(e);
+                    }
+                });
+
+                //Manually Computing the Hash-Data with Color for Valid Category  
+                valid_arr.forEach(function (valid) {
+                    var color;
+                    var name;
+                    var val;
+                    var hash;
+
+                    if (valid[0].match("Valid Physical")) {
+                        color = getColor[valid[0]];
+                        name = valid[0];
+                        val = valid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        valid_color_arr.push(hash);
+                    } else if (valid[0].match("Valid Physical")) {
+                        color = getColor[valid[0]];
+                        name = valid[0];
+                        val = valid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        valid_color_arr.push(hash);
+                    } else if (valid[0].match("Valid VM")) {
+                        color = getColor[valid[0]];
+                        name = valid[0];
+                        val = valid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        valid_color_arr.push(hash);
+                    } else if (valid[0].match("Valid Network")) {
+                        color = getColor[valid[0]];
+                        name = valid[0];
+                        val = valid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        valid_color_arr.push(hash);
+                    } else if (valid[0].match("Valid Storage")) {
+                        color = getColor[valid[0]];
+                        name = valid[0];
+                        val = valid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        valid_color_arr.push(hash);
+                    }
+                });
+
+                //Manually Computing the Hash-Data with Color for Invalid Category  
+                invalid_arr.forEach(function (invalid) {
+                    var color;
+                    var name;
+                    var val;
+                    var hash;
+
+                    if (invalid[0].match("Investigate-L1")) {
+                        color = getColor[invalid[0]];
+                        name = invalid[0];
+                        val = invalid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        invalid_color_arr.push(hash);
+                    } else if (invalid[0].match("Investigate-L2")) {
+                        color = getColor[invalid[0]];
+                        name = invalid[0];
+                        val = invalid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        invalid_color_arr.push(hash);
+                    } else if (invalid[0].match("Invalid Physical")) {
+                        color = getColor[invalid[0]];
+                        name = invalid[0];
+                        val = invalid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        invalid_color_arr.push(hash);
+                    } else if (invalid[0].match("Invalid Asset")) {
+                        color = getColor[invalid[0]];
+                        name = invalid[0];
+                        val = invalid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        invalid_color_arr.push(hash);
+                    } else if (invalid[0].match("Ims Asset")) {
+                        color = getColor[invalid[0]];
+                        name = invalid[0];
+                        val = invalid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        invalid_color_arr.push(hash);
+                    } else if (invalid[0].match("In Progress Physical")) {
+                        color = getColor[invalid[0]];
+                        name = invalid[0];
+                        val = invalid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        invalid_color_arr.push(hash);
+                    }
+                });
+
+                //Sorted Pie Data with Custom Color Scheme for Valid Category
+                var chart_data = invalid_color_arr.concat(valid_color_arr);
+
+                //HighCharts Block 
+                $('#container').highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false
+                    },
+                    title: {
+                        text: 'IMS Reliability Stats'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%<\/b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+
+                            point: {
+                                events: {
+                                    click: function (event) {
+
+                                        var selected_category = this.name;
+
+                                        uri = "http://ims.corp.inmobi.com/ims/_design/ims_asset_report/_view/ims_asset_classification?reduce=false&&start_key=[%22" + selected_category + "%22]&&end_key=[%22" + selected_category + "%22,{}]&&include_docs=true";
+
+                                        $.ajax({
+                                            type: 'GET',
+                                            headers: {'Content-Type': "application/json"},
+                                            url: uri,
+                                            success: function (res) {
+                                                var data = JSON.parse(res);
+                                                var records = data["rows"];
+                                                var docs = [];
+                                                records.forEach(function (rec) {
+                                                    docs.push(rec["doc"]);
+                                                });
+
+                                                //DataTable Visualization for detailed view for each pie category   
+                                                var row_arr = getDataRows(docs);
+                                                var col_arr = [{
+                                                    "sTitle": "Itag",
+                                                    "sClass": "center"
+                                                }, {
+                                                    "sTitle": "FQDN",
+                                                    "sClass": "center"
+                                                }, {
+                                                    "sTitle": "MacID",
+                                                    "sClass": "center"
+                                                }, {
+                                                    "sTitle": "IP Address",
+                                                    "sClass": "center"
+                                                }];
+
+                                                //Formatting the Input Data to DataTable
+                                                display_data = {};
+                                                display_data["aaData"] = row_arr;
+                                                display_data["aoColumns"] = col_arr;
+
+                                                //DataTable Header for Selected Pie Category
+                                                $('#header').html('<p class="normal">Asset Details for &nbsp;' + selected_category + '&nbsp;&nbsp;(' + row_arr.length + ')</b>');
+                                                
+                                                //Invoking Data Table with Custom Header
+                                                $('#display').html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="data-table"></table>');
+                                                $('#data-table').dataTable(display_data);
+                                            }
+                                        })
+                                    },
+                                    mouseOver: function () {
+                                        var selected_category = this.name;
+                                        $reporting.html('<p> <span id="head"> Category:</span>&nbsp;&nbsp;<span id="desc">' + selected_category + '</span><br><span id="head">' + 'Description:</span>&nbsp;&nbsp;<span id="desc">' + ast_details[selected_category] + '</span></p>');
+                                    },
+                                    mouseOut: function () {
+                                        $reporting.empty();
+                                    }
+                                }
+                            },
+
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}<\/b>: {point.percentage:.1f} %'
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'asset %',
+                        data: chart_data
+                    }]
+                });
+            })
+
+         //Sub-Routine to return row data for DataTable
+        function getDataRows(data) {
+            var dataRows = [];
+            data.forEach(function (dat) {
+                var row = [];
+
+                //Itag 
+                if (dat["itag"] != null) {
+
+                    if (dat["_id"].indexOf("asset.attr") >= 0) {
+                        row.push(dat["_id"]);
+                    } else {
+
+                        //IB1 SR/NW/ST Inspection (block to be modified/removed later)
+                        if (dat["itag"].indexOf("IB1SR") >= 0) {
+                            asset_url = "http://ims.corp.inmobi.com:5984/_utils/document.html?ims/asset.server:" + dat["itag"];
+                            itag = dat["itag"];
+                            row.push("<a href=" + asset_url + ">" + itag + "</a>");
+                        } else if (dat["itag"].indexOf("IB1NW") >= 0) {
+                            asset_url = "http://ims.corp.inmobi.com:5984/_utils/document.html?ims/asset.network:" + dat["itag"];
+                            itag = dat["itag"];
+                            row.push("<a href=" + asset_url + ">" + itag + "</a>");
+                        } else if (dat["itag"].indexOf("IB1ST") >= 0) {
+                            asset_url = "http://ims.corp.inmobi.com:5984/_utils/document.html?ims/asset.storage:" + dat["itag"];
+                            itag = dat["itag"];
+                            row.push("<a href=" + asset_url + ">" + itag + "</a>");
+                        } else {
+                            console.log(dat["itag"]);
+                            row.push(dat["itag"]);
+                        }
+                    }
+                } else {
+                    if (dat["_id"].indexOf("Asset.team") >= 0 || dat["_id"].indexOf("asset.team") >= 0) {
+                        row.push(dat["_id"]);
+                    } else {
+                        row.push("Null");
+                    }
+                }
+
+                //FQDN 
+                if (dat["fqdn"] != null || dat["fqdn"] != undefined) {
+                    row.push(dat["fqdn"]);
+                } else {
+                    row.push("Null");
+                }
+
+                //MacID
+                if (dat["macid"] != null || dat["macid"] != undefined) {
+                    row.push(dat["macid"]);
+                } else {
+                    row.push("Null");
+                }
+
+                //IP
+                if (dat["ip"] != null) {
+                    if (dat["ip"]["ipaddress"] != null) {
+                        row.push(dat["ip"]["ipaddress"]);
+                    } else {
+                        row.push("Null");
+                    }
+                } else {
+                    row.push("Null");
+                }
+                dataRows.push(row);
+            });
+            return dataRows;
+        }
+    </script>
+</body>
+</html>

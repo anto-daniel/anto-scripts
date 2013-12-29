@@ -1,0 +1,14 @@
+{
+    "name": "infra-reports",
+    "version": "0.0.1",
+    "description": "Infrastructure Report",
+    "modules": ["lib"],
+    "load": "lib/app",
+    "dependencies": {
+        "attachments": null,
+        "modules": null,
+        "properties": null,
+	"db": null,
+	"jquery": null
+    }
+}

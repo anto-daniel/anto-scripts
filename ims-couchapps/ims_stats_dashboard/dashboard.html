@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>IMS Asset Classification</title>
+</head>
+
+<body>
+    <!--jQuery Plugin Import-->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+    <!--div container for pie chart-->
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+    <!--div container for pie description-->
+    <div id="reporting"></div>
+
+    <!--div container for pie data-->
+    <div id="data"></div>
+
+    <!--Logic to form the pis-chart visualization-->
+
+    <script>
+        var uri = "http://ims.corp.inmobi.com:5984/ims/_design/ims_asset_report/_view/ims_asset_classification?group=true";
+
+        function call_url() {
+            return $.ajax({
+                type: 'GET',
+                headers: {
+                    'Content-Type': "application/json"
+                },
+                url: uri
+            });
+        }
+
+        $("#container").html("IMS Stats Chart is Loading...");
+
+        call_url()
+            .done(function (response) {
+
+                var $reporting = $('#reporting');
+                var $data = $('#data');
+                var res = JSON.parse(response);
+                var stats = res["rows"];
+                var series_data = [];
+                var ast_details = {};
+                var req_arr = [];
+ 
+                stats.forEach(function (stat) {
+
+                    //Data Input for Pie-Chart 
+                    req_arr.push([stat["key"][0], stat["value"]]);
+
+                    //Brief Description for each Pie-Category
+                    ast_details[stat["key"][0]] = stat["key"][1];
+
+                });
+
+                //Color Hash for Logically Valid Category 
+                var getColor = {
+                    'Valid Physical': '#66FF66',
+                    'Valid VM': '#47B247',
+                    'Valid Network': '#C2FFC2',
+                    'Valid Storage': '#5CE65C',
+                };
+
+                //Sorted Data Set for Pie-Chart
+                req_arr.sort(function (a, b) {
+                    return a[1] - b[1]
+                });
+                valid_arr = [];
+                invalid_arr = [];
+                color_arr = [];
+
+
+                req_arr.forEach(function (e) {
+                    if (e[0].indexOf("Valid") == 0) {
+                        valid_arr.push(e);
+                    } else {
+                        invalid_arr.push(e);
+                    }
+                });
+
+                //Manually Computing the Hash-Data with Color for Valid Category  
+                valid_arr.forEach(function (valid) {
+                    var color;
+                    var name;
+                    var val;
+                    var hash;
+
+                    if (valid[0].match("Valid Physical")) {
+                        color = getColor[valid[0]];
+                        name = valid[0];
+                        val = valid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        color_arr.push(hash);
+                    } else if (valid[0].match("Valid Physical")) {
+                        color = getColor[valid[0]];
+                        name = valid[0];
+                        val = valid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        color_arr.push(hash);
+                    } else if (valid[0].match("Valid VM")) {
+                        color = getColor[valid[0]];
+                        name = valid[0];
+                        val = valid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        color_arr.push(hash);
+                    } else if (valid[0].match("Valid Network")) {
+                        color = getColor[valid[0]];
+                        name = valid[0];
+                        val = valid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        color_arr.push(hash);
+                    } else if (valid[0].match("Valid Storage")) {
+                        color = getColor[valid[0]];
+                        name = valid[0];
+                        val = valid[1];
+                        hash = {
+                            "name": name,
+                            "y": val,
+                            "color": color
+                        };
+                        color_arr.push(hash);
+                    }
+                });
+
+                //Sorted Pie Data with Custom Color Scheme for Valid Category
+                var chart_data = invalid_arr.concat(color_arr);
+
+                //HighCharts Block 
+                $('#container').highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false
+                    },
+                    title: {
+                        text: 'IMS Reliability Stats'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%<\/b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+
+                            point: {
+                                events: {
+                                    click: function (event) {
+
+                                        var selected_category = this.name;
+                                        uri = "http://ims.corp.inmobi.com/ims/_design/ims_asset_report/_view/ims_asset_classification?reduce=false&&start_key=[%22" + selected_category + "%22]&&end_key=[%22" + selected_category + "%22,{}]";
+
+                                        $data.html($("ul").empty());
+
+                                        $.ajax({
+                                            type: 'GET',
+                                            headers: {
+                                                'Content-Type': "application/json"
+                                            },
+                                            url: uri,
+                                            success: function (res) {
+                                                var data = JSON.parse(res);
+                                                var records = data["rows"];
+                                                var display_data = [];
+                                                records.forEach(function (rec) {
+                                                    var key = rec["id"];
+                                                    display_data.push(key);
+                                                });
+
+                                                $data.html('<ul id="display"><li style="list-style-type:none";><p><b><i>List of asset id for the selected category<br></i></b></p></li><li style="list-style-type:none";>Total Count:' + display_data.length + '</li><li style="list-style-type:none";><br></li></ul>');
+
+                                                display_data.forEach(function (id) {
+
+                                                    $data.html($("#display").append('<li>' + id + '</li>'));
+                                                });
+                                            }
+                                        })
+                                    },
+                                    mouseOver: function () {
+                                        var selected_category = this.name;
+                                        $reporting.html('<font size="3.5"> <b>Category:</b></font><font size="3"><i>&nbsp;&nbsp;' + selected_category + '</i></font><br>' + '<font size="3.5"><b>Description:</b></font><font size="3"><i>&nbsp;&nbsp;' + ast_details[selected_category] + '</i></font>');
+                                    },
+                                    mouseOut: function () {
+                                        $reporting.empty();
+                                    }
+                                }
+                            },
+
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}<\/b>: {point.percentage:.1f} %'
+                    },
+                    series: [{
+                        type: 'pie',
+                        name: 'asset %',
+                        data: chart_data
+                    }]
+                });
+            })
+    </script>
+</body>
+</html>

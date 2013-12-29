@@ -1,0 +1,7 @@
+{
+	"db" : "ims-test",
+	"host" : "localhost",
+	"port" : 5984,
+	"user" : "imsadmin",
+	"password" :"imsadmin"
+}

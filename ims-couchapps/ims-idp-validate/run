@@ -1,0 +1,24 @@
+#! /bin/bash
+
+curl -X DELETE "http://imsadmin:imsadmin@localhost:5984/$1"
+if [ $? == 0 ]
+ then 
+ echo "Deleting $1 DB" 
+fi
+
+curl -X PUT "http://imsadmin:imsadmin@localhost:5984/$1"
+if [ $? == 0 ] 
+ then
+ echo "Creating $1 DB"
+fi
+ 
+echo "pushing design doc into $1"
+kanso install
+kanso push http://imsadmin:imsadmin@localhost:5984/$1
+if [ $? == 0 ]
+ then
+ echo "pushed design doc into $1"
+fi
+
+echo "Executing Unit Test"
+./node_modules/mocha/bin/mocha --ui tdd test/validate-doc-test.js

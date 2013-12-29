@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>IMS Getting Started Guide</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/themes/black-tie/jquery-ui.css" rel="stylesheet">
+    <link href="../css/jquery.tocify.css" rel="stylesheet">
+    <link href="../css/prettify.css" type="text/css" rel="stylesheet" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <style>
+    body {
+      padding-top: 20px;
+    }
+    p {
+      font-size: 16px;
+    }
+    .headerDoc {
+      color: #005580;
+    }
+
+@media (max-width: 767px) {
+    #toc {
+        position: relative;
+        width: 100%;
+        margin: 0px 0px 20px 0px;
+    }
+}
+    </style>
+  </head>
+
+  <body>
+
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div id="toc">
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+          <div class="hero-unit">
+            <h1>IMS Getting Started Guide</h1>
+            
+            <br />
+            <h2>About</h2>
+            <div class="github-widget" data-repo="gfranko/jquery.tocify.js"></div>
+            <br />
+            <p>This guide is aimed at getting anybody who is a user of Infrastructure to benefit from IMS, Inmobi's Infrastructure Management System - a platform where infrastructure teams come together to maintain a single source of truth about Infrastrcuture. The details of the basics of IMS as well as FAQ are covered in this guide.</p>
+          </div>
+
+          <h2>What is IMS?</h2>
+	  <p>IMS is one of Inmobi's Production Engineering platforms that enables ops teams to maintain a Single Source Of Truth about various aspects of our infrastructure - such as what is the OS running on a set of hosts? what is the network switch this host is connected to? Given our goal is to maintain a Source Of Truth, IMS achieves that by being highly restrictive and highly flexible at the same time. It is highly restrictive in how the data can be updated, by whom, and how the data must be structured. It is flexible in terms of being easy to customise and extend.</p>
+	  <p>To solve these wide range of problems, we have adopted the industry standard CIM methodology while approaching IMS. This involves building our system to essentially allow one to define Classes (Servers, Load Balancers, etc.,), Attributes (hostname, ipaddress, owner, master_node, etc.,), Relationships (ex: "host.vip must be an IP assigned to an LB") and so on. </p>
+	  <p>In this first release, we have worked with Infra and IDP teams to bring out a usable database of infrastructural assets that we believe will solve 80% of the needs of 80% of inmobi's infrastructure user base although arguably in probably unimaginably raw ways for some people's tastes.</p>
+	  <h3>Vision</h3>
+	  <p>Picture this: A day in the not too distant future when we could be doing one-button host rejumps or know instant figures for InMobi's total cost of IT operations.</p>
+	  <h3>Mission</h3>
+	  <p>Break silos without casualty: blend IMS into existing infrastructural processes.</p>
+	  <h3>Perspective</h3>
+	  <p>When we set out to build a product whose future use cases, we felt in our veins, will be many and varied, yet building something general purpose in anticipation of the future would lead us into the Grand Projects territory. As believers in the <em><a href="http://theleanstartup.com/">Lean Startup</a></em> methodology, we set out to build a Minimum Viable Product. We found CouchDB favouring both the long term functional needs (mvcc, callbacks, etc.,) as well shined at helping us with the short term tactical challenges of building a product (input validation... and in genral, tinkerability). As of this version, IMS is just couchDB.</p>
+	  <h2>Concepts</h2>
+	  <p>The following concepts are useful to pick up before you delve deeper in this guide</p>
+          <table class="table table-striped table-bordered table-condensed">
+	    <tr>
+              <th>Terminology</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>id</td>
+              <td>A unique identifier for any asset being tracked in IMS. It is of the form asset.Type:UniqueID</td>
+            </tr>
+	    <tr>
+	      <td>type</td>
+	      <td>Type refers to what kind of asset and can be compared to the concept of 'classes' in OO terms. Based on types (and other things) IMS lets you control and orchestrate. The following types of assets exist: server, network, storage, ec2, service (IDP), environment (IDP) and cluster (IDP).</td>
+	    </tr>
+	    <tr>
+	      <td>asset</td>
+	      <td>Any infrastructural thing - a single server or a rack or a brick or whatever. In OO terms, an 'asset' is like an 'object'; similarly a 'type' is like a 'class'.</td>
+	    </tr>
+	    <tr>
+	      <td>report</td>
+	      <td>A pre-defined query into IMS database which typically returns a list of assets matching some criteria, but it is not necessarily to be limited to assets. custom reports can be generated in a near-self-service way where you can write very minimal <a href="http://couchapp.org/">CouchApps</a> that describe a view that suits you best.</td>
+	    </tr>
+	    <tr>
+	      <td>attribute</td>
+	      <td>one piece of metadata - a key-value data point of each asset. Examples: hostname, itag, etc., It is possible to control what values an attribute can take, who can change it, etc., </td>
+	    </tr>
+	    <tr>
+	      <td>document</td>
+	      <td>sometimes, interchange'ably used to refer to an asset but in the couchdb context</td>
+	    </tr>
+	  </table>
+	  <h2>Querying IMS</h2>
+	  <p>There are two ways to query IMS:</p>
+	  <ol class="well">
+	    <li><a href="/doc/collection.html">Collection API</a>: a novel and powerful full-tree JSON search and summarization engine on top of IMS API.</li>
+	    <li><a href="/search/index.html">Search</a>: a user friendly auto completion based web interface to search for IMS assets, powered by the <a href="/doc/collection.html">Collection API</a></li>
+	  </ol>
+	  <h2>Updating IMS</h2>
+	  <p>IMS is being updated in two ways:</p>
+	  <ol>
+	    <li>Infra team upload the XLS given to them by Data center folks and IMS helps them review / load those assets into IMS </li>
+	    <li>SA runs an agent on all of SA's hosts which updates IMS with two vital pieces of information:
+	      <ol>
+		<li>The facts discoverable from the host, currently by running 'facter' command through an Agent.</li>
+		<li>Keeping track of a heartbeat to universally identify 'down' host as well as use it to ad-hoc measure capacity utilisation across our entire fleet.</li>
+	      </ol>
+	    </li>
+	    <p>It is in the short term road map of IMS project to have the following information update processes come up
+	      <ul>
+		<li>AWS assets come onboard and is synced periodically</li>
+		<li>VIP information per asset is synced periodically</li>
+		<li>Provisioning workflow detailing CouchApps</li>
+		<li>DNS records management</li>
+		<li>.. and many more</li>
+	      </ul>
+	    </p>
+	    <p>So, although we intend to let IMS be freely updatable within strict bounds, since the bounds and rules are still being evolved, we do not allow explicit updates except through onboarded apps to perform specific team's functions (ex: upload excel sheet to IMS or upload facter data to IMS). We do have a plan to provide a way for all users to attach certain attributes to host if they are considered owners. Currently, the two apps outlined above are the only applications that update IMS data. However, a lot of new apps are coming, countless others are possible. If you'd like to update IMS data, please let us know what you intend to update and we can help you achieve it.</p>
+	  <h2>FAQ</h2>
+	  <h3>Can I do sub string search?</h3>
+	  <p>Yes. see below.</p>
+	  <h3>Can I do and/or search?</h3>
+	  <p>Yes. You can use our new <A href="/doc/collection.html">collection API</a> powered <a href="/search/index.html">search interface</a> (or directly the collection API itself) to do sub-string search.</p>
+	  <h3>Can I search hashes?</h3>
+	  <p>Yes. The collection API flattens complex hashes into a dotted notation. For more info, see <a href="/doc/collection.html">Collection API</a>.</p>
+	  <h3>
+	  <h3>Can I bulk replace values of assets?</h3>
+	  <p>Yes. You can potentially use the CouchDB <a href="http://wiki.apache.org/couchdb/HTTP_Bulk_Document_API">Bulk Document API</a> directly over our the end point address "http://ims.corp.inmobi.com/ims" or you can do it in a hassle-free way when our <a href="https://jira.corp.inmobi.com/browse/IMS-61">Auto Updater module</a> is ready - but since there has been no demand for such a general-purpose product, we haven't come around to building this. If you want this built, <a href="mailto:ims-dev@inmobi.com">let us know</a>.</p>
+	  <h3>How do I get you to solve my infrastructure problem?</h3>
+	  <p>You can write your problem story under the <a href="http://jira.corp.inmobi.com/browse/IMS">IMS</a> JIRA project.</p>
+	  <h3>Is there a document describing various attributes of each asset type?</h3>
+	  <p>For IDP's IMS use cases, we have <del><a href="https://jira.corp.inmobi.com/browse/IMS-124">a plan</a></del> <a href="/doc/idp.html">IMS User Guide for IDP</a>. In the long term view, <a href="https://jira.corp.inmobi.com/browse/IMS-129">we're building a search interface</a> that will let you do on-the-fly query and reports generation.</p>
+	  <h3>How will IMS be used by IDP?</h3>
+	  <p>Check out the <a href="idp.html">IDP Guide</a></p>.
+	  <h3>How reliable is the data in IMS now?</h3>
+	  <p>See the <A href="/reliability/index.html">Data Reliability Dashboard</a> to skip the details. If you're still reading, well: we are bringing years of manually maintained cruft into a uniform scheme - it is not without it's battles and one of the side effects is that not all existing hosts have been loaded into IMS. We are working with infra in ironing out these assets. So, to help ourselves <em>and</em> you construct a more reliable IMS, we built the Data Reliability Dashboard.</p>
+	  <h3>What level of Load Balancer integration does IMS have?</h3>
+	  <p>We have a plan to <a href="https://jira.corp.inmobi.com/browse/IMS-113">build a VIP viewer CouchApp on top of the IMS API</a>.</p>
+	  <h3>How does IMS collect information from hosts?</h3>
+	  <p>We run a light-weight node.js based agent which essentially runs every 5 minutes.</p>
+	  <p>Have any other questions? <a href="mailto:ims-dev@inmobi.com">Shoot us your questions</a> and we shall be glad to update this section with your questions.</p>
+        </div><!--/span-->
+      </div><!--/row-->
+
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../js/jquery/jquery-1.8.3.min.js"></script>
+    <script src="../js/jqueryui/jquery-ui-1.9.1.custom.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/jquery.tocify.min.js"></script>
+    <script src="../js/prettify.js"></script>
+    <script>
+        $(function() {
+
+            var toc = $("#toc").tocify({
+              selectors: "h2,h3,h4,h5"
+            }).data("toc-tocify");
+
+            prettyPrint();
+            $(".optionName").popover({ trigger: "hover" });
+
+        });
+    </script>
+
+  </body>
+</html>

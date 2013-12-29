@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>IMS Reliability Dashboard</title>
+</head>
+
+<body>
+
+  <!--Plugin Import-->
+
+  <!--CSS Files-->
+
+  <!--Pie CSS-->
+  <link rel="stylesheet" href="CSS/pie.css"></link>
+
+  <!--BootStrap CSS-->
+  <link rel="stylesheet" href="CSS/bootstrap.min.css"></link>
+  <link rel="stylesheet" href="CSS/bootstrap-responsive.min.css"></link>
+
+  <!--DataTable CSS-->
+  <link rel="stylesheet" href="CSS/jquery.dataTables.css"></link>
+
+  <!--Plugin Import-->
+
+  <!--jQuery-->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+  <!--Bootstrap-->
+  <script src="JS/bootstrap.js"></script>
+
+  <!--DataTables-->
+  <script src="http://datatables.net/download/build/jquery.dataTables.js"></script>
+
+  <!--HighCharts-->
+  <script src="http://code.highcharts.com/highcharts.js"></script>
+  <script src="http://code.highcharts.com/modules/exporting.js"></script>
+  <script src="JS/pieTheme.js"></script>
+
+  <!--Custom Plugin-->
+  <script src="JS/pie.js"></script>
+
+  <!--End of Plugin Import-->
+
+  <!--Menu Conatiner-->
+  <div id="Nav-Bar">
+    <div class="navbar  navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="http://ims.corp.inmobi.com/" target="_blank">
+            <div id='ims'><b>IMS</b>
+            </div>
+          </a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="index.html">Reliability Dashboard</a>
+              </li>
+              <li><a href="doc.html">Docs</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--End of Menu-->
+
+
+  <!--Main Conatiner-->
+  <div id="main-container">
+    <!--div container for Pie Chart-->
+    <div id="pie"></div>
+    <!--div container for Pie Description-->
+    <div id="desc" align="left"></div>
+    <!--div container for DataTable Header-->
+    <div id="headDT"></div>
+    <!--div container for DataTable-->
+    <div id="dt"></div>
+  </div>
+  <!--End of Main-->
+
+
+  <!--Pie Chart Visualization-->
+  <script>
+  //Invoke DataTable  
+  drawGlobalDT()
+
+  //Pie Chart Block               
+  $("#pie").html("IMS Stats Chart is Loading...");
+
+  //Params for pieChart()   
+  chart_title = "IMS Reliability Stats";
+  tooltip_name = "asset";
+  div_container = "#pie";
+  uri = "http://ims.corp.inmobi.com:5984/ims/_design/ims_asset_report/_view/ims_asset_classification?group=true";
+
+  //Custom pie color for a set of keys returned by couchdb view  
+  var getColor = {
+    'Valid Physical': '#66FF66',
+    'Valid VM': '#47B247',
+    'Valid Network': '#C2FFC2',
+
+    'Valid Storage': '#5CE65C',
+    'Investigate-L1': '#D14719',
+    'Investigate-L2': '#FF9933',
+    'Invalid Physical': '#FF8080',
+    'Invalid Asset': '#FF0000',
+    'Ims Asset': '#FF9900',
+    'In Progress Physical': '#FF3300',
+  };
+
+  //Store description for each key               
+  var desc = {};
+
+  //Invoke pieChart()  
+  pieChart(chart_title, tooltip_name, div_container, uri, function (key, value) {
+    desc[key[0]] = key[1];
+    if (key[0].match("Valid Physical")) {
+      color = getColor[key[0]];
+      name = key[0];
+      val = value;
+      hash = {
+        "name": name,
+        "y": val,
+        "color": color
+      };
+      return (hash);
+    }
+    else if (key[0].match("Valid VM")) {
+      color = getColor[key[0]];
+      name = key[0];
+      val = value;
+      hash = {
+        "name": name,
+        "y": val,
+        "color": color
+      };
+      return (hash);
+    }
+    else if (key[0].match("Valid Network")) {
+      color = getColor[key[0]];
+      name = key[0];
+      val = value;
+      hash = {
+        "name": name,
+        "y": val,
+        "color": color
+      };
+      return (hash);
+    }
+    else if (key[0].match("Valid Storage")) {
+      color = getColor[key[0]];
+      name = key[0];
+      val = value;
+      hash = {
+        "name": name,
+        "y": val,
+        "color": color
+      };
+      return (hash);
+    }
+    else if (key[0].match("Investigate-L1")) {
+      color = getColor[key[0]];
+      name = key[0];
+      val = value;
+      hash = {
+        "name": name,
+        "y": val,
+        "color": color
+      }
+      return hash;
+    }
+    else if (key[0].match("Investigate-L2")) {
+      color = getColor[key[0]];
+      name = key[0];
+      val = value;
+      hash = {
+        "name": name,
+        "y": val,
+        "color": color
+      }
+      return hash;
+    }
+    else if (key[0].match("Invalid Physical")) {
+      color = getColor[key[0]];
+      name = key[0];
+      val = value;
+      hash = {
+        "name": name,
+        "y": val,
+        "color": color
+      }
+      return hash;
+    }
+    else if (key[0].match("Invalid Asset")) {
+      color = getColor[key[0]];
+      name = key[0];
+      val = value;
+      hash = {
+        "name": name,
+        "y": val,
+        "color": color
+      }
+      return hash;
+    }
+    else if (key[0].match("Ims Asset")) {
+      color = getColor[key[0]];
+      name = key[0];
+      val = value;
+      hash = {
+        "name": name,
+        "y": val,
+        "color": color
+      }
+      return hash;
+    }
+    else if (key[0].match("In Progress Physical")) {
+      color = getColor[key[0]];
+      name = key[0];
+      val = value;
+      hash = {
+        "name": name,
+        "y": val,
+        "color": color
+      }
+      return hash;
+    }
+    else {
+      name = key[0];
+      val = value;
+      hash = {
+        "name": name,
+        "y": val,
+      }
+      return hash;
+    }
+  }, function (category) {
+
+    var uri = "http://ims.corp.inmobi.com/ims/_design/ims_asset_report/_view/ims_asset_classification?reduce=false&&start_key=[%22" + category + "%22]&&end_key=[%22" + category + "%22,{}]&&include_docs=true";
+
+    getViewData(uri, function (response) {
+
+      var docs = [];
+
+      response.forEach(function (res) {
+        docs.push(res["doc"]);
+      });
+
+      var row_data = getDataRows(docs);
+      var col_data = [{
+        "sTitle": "Itag",
+        "sClass": "center"
+      }, {
+        "sTitle": "FQDN",
+        "sClass": "center"
+      }, {
+        "sTitle": "MacID",
+        "sClass": "center"
+      }, {
+        "sTitle": "IP Address",
+        "sClass": "center"
+      }];
+
+      //Formatting the Input to DataTable
+      dataDT = {};
+      dataDT["aaData"] = row_data;
+      dataDT["aoColumns"] = col_data;
+
+      //DataTable Header for Selected Pie Category
+      $("#headDT").html('<br><p class="normal">Asset Details for &nbsp;' + category + '&nbsp;&nbsp;(' + row_data.length + ')</b>');
+
+      //Invoke DataTable 
+      $("#dt").html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="data-table"></table>');
+      $('#data-table').dataTable(dataDT);
+    })
+
+  }, function () {
+    drawGlobalDT()
+  }, function (category) {
+    $("#desc").html('<p> <span id="head"> Category:</span>&nbsp;&nbsp;<span id="desc">' + category + '</span><br><span id="head">' + 'Description:</span>&nbsp;&nbsp;<span id="desc">' + desc[category] + '</span></p>');
+  }, function () {
+    $("#desc").html("");
+  });
+
+  //func() to return row data for DT 
+  function getDataRows(data) {
+
+    var dataRows = [];
+
+    data.forEach(function (dat) {
+
+      var row = [];
+
+      //Block to append custom fields
+
+      //Itag 
+      if (dat["itag"] != null) {
+
+        if (dat["_id"].indexOf("asset.attr_doc") >= 0) {
+          row.push(dat["_id"]);
+        }
+
+        if (dat["_id"].indexOf("asset.server") >= 0) {
+          asset_url = "http://ims.corp.inmobi.com:5984/_utils/document.html?ims/asset.server:" + dat["itag"];
+          itag = dat["itag"];
+          row.push("<a target=_blank href=" + asset_url + ">" + itag + "</a>");
+        }
+        else if (dat["_id"].indexOf("asset.network") >= 0) {
+          asset_url = "http://ims.corp.inmobi.com:5984/_utils/document.html?ims/asset.network:" + dat["itag"];
+          itag = dat["itag"];
+          row.push("<a target=_blank href=" + asset_url + ">" + itag + "</a>");
+        }
+        else if (dat["_id"].indexOf("asset.storage") >= 0) {
+          asset_url = "http://ims.corp.inmobi.com:5984/_utils/document.html?ims/asset.storage:" + dat["itag"];
+          itag = dat["itag"];
+          row.push("<a target=_blank href=" + asset_url + ">" + itag + "</a>");
+        }
+        else {
+          row.push(doc["itag"]);
+        }
+
+      }
+      else {
+        row.push(dat["_id"]);
+      }
+
+      //FQDN 
+      if (dat["fqdn"] != null || dat["fqdn"] != undefined) {
+        row.push(dat["fqdn"]);
+      }
+      else {
+        row.push("Null");
+      }
+
+      //MacID
+      if (dat["macid"] != null || dat["macid"] != undefined) {
+        row.push(dat["macid"]);
+      }
+      else {
+        row.push("Null");
+      }
+
+      //IP
+      if (dat["ip"] != null) {
+        if (dat["ip"]["ipaddress"] != null) {
+          row.push(dat["ip"]["ipaddress"]);
+        }
+        else {
+          row.push("Null");
+        }
+      }
+      else {
+        row.push("Null");
+      }
+      dataRows.push(row);
+    });
+    return dataRows;
+  }
+
+  //Sub-Routine to display global DT
+  function drawGlobalDT() {
+
+    var uri = "http://ims.corp.inmobi.com:5984/ims/_design/ims_asset_report/_view/ims_asset_classification?reduce=false&&include_docs=true";
+
+    getViewData(uri, function (response) {
+
+      var row_data = [];
+      var col_data = [];
+
+      response.forEach(function (res) {
+
+        unique_rec = [];
+        unique_rec.push(res["key"][0]);
+        doc = res["doc"];
+
+        //Block to append custom doc data (Itag, FQDN, MacID, IP)
+
+        //Itag
+        if (doc["itag"] != null) {
+          if (doc["_id"].indexOf("asset.attr_doc") >= 0) {
+            unique_rec.push(doc["_id"]);
+          }
+          if (doc["_id"].indexOf("asset.server") >= 0) {
+            asset_url = "http://ims.corp.inmobi.com:5984/_utils/document.html?ims/asset.server:" + doc["itag"];
+            itag = doc["itag"];
+            unique_rec.push("<a target=_blank href=" + asset_url + ">" + itag + "</a>");
+          }
+          else if (doc["_id"].indexOf("asset.network") >= 0) {
+            asset_url = "http://ims.corp.inmobi.com:5984/_utils/document.html?ims/asset.network:" + doc["itag"];
+            itag = doc["itag"];
+            unique_rec.push("<a target=_blank href=" + asset_url + ">" + itag + "</a>");
+          }
+          else if (doc["_id"].indexOf("asset.storage") >= 0) {
+            asset_url = "http://ims.corp.inmobi.com:5984/_utils/document.html?ims/asset.storage:" + doc["itag"];
+            itag = doc["itag"];
+            unique_rec.push("<a target=_blank href=" + asset_url + ">" + itag + "</a>");
+          }
+          else {
+            unique_rec.push(doc["itag"]);
+          }
+
+        }
+        else {
+          unique_rec.push(doc["_id"]);
+        }
+
+        //FQDN 
+        if (doc["fqdn"] != null || doc["fqdn"] != undefined) {
+          unique_rec.push(doc["fqdn"]);
+        }
+        else {
+          unique_rec.push("Null");
+        }
+
+        //MacID
+        if (doc["macid"] != null || doc["macid"] != undefined) {
+          unique_rec.push(doc["macid"]);
+        }
+        else {
+          unique_rec.push("Null");
+        }
+
+        //IP
+        if (doc["ip"] != null) {
+          if (doc["ip"]["ipaddress"] != null) {
+            unique_rec.push(doc["ip"]["ipaddress"]);
+          }
+          else {
+            unique_rec.push("Null");
+          }
+        }
+        else {
+          unique_rec.push("Null");
+        }
+
+        row_data.push(unique_rec);
+      });
+
+      //Column Fields for DataTable
+      var col_data = [{
+        "sTitle": "Category",
+        "sClass": "center"
+      }, {
+        "sTitle": "Itag",
+        "sClass": "center"
+      }, {
+        "sTitle": "FQDN",
+        "sClass": "center"
+      }, {
+        "sTitle": "MacID",
+        "sClass": "center"
+      }, {
+        "sTitle": "IP Address",
+        "sClass": "center"
+      }];
+
+      //Formatting DataTable
+      table_data = {};
+      table_data["aaData"] = row_data;
+      table_data["aoColumns"] = col_data;
+
+      //Invoking DataTable
+      $("#headDT").html('<br><p class="normal">IMS Asset Classification Table</p>');
+      $("#dt").html('<table cellpadding="0" cellspacing="0" border="0" class="display" id="asset-table"></table>');
+      $('#asset-table').dataTable(table_data);
+    });
+  }
+  </script>
+</body>
+</html>
