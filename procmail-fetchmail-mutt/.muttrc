@@ -1,0 +1,84 @@
+# User Details
+
+set realname = "Anto Daniel"
+set from = "anto.daniel@inmobi.com"
+set use_from = yes
+set envelope_from ="yes"
+
+# Use a signature
+set signature="~/.mutt/sig"
+set mailcap_path = ~/.mutt/mailcap
+
+# Use msmtp rather than sendmail. Check that 
+# the path is correct for your system:
+set sendmail="/usr/bin/msmtp -a gmail anto.daniel@inmobi.com"
+set query_command="goobook query '%s'"
+macro index,pager a "<pipe-message>goobook add<return>" "add sender to google contacts"
+set editor="vim -c 'set tw=70 et' '+/^$' "
+bind editor <Tab> complete-query
+set print_command="muttprint"
+#my_hdr X-Operating-System: `cat /etc/issue`  # Ubuntu machine
+##############
+
+
+set pager_index_lines = 10
+set pager_context = 3
+set pager_stop
+set menu_scroll
+set tilde
+set nomarkers
+
+set sort = threads
+set sort_aux = reverse-date-received
+set realname = "Anto Daniel"
+set from = "anto.daniel@inmobi.com"
+set use_from = yes
+set envelope_from ="yes"
+
+# Use a signature
+set signature="~/.mutt/sig"
+set mailcap_path = ~/.mutt/mailcap
+
+# Use msmtp rather than sendmail. Check that 
+# the path is correct for your system:
+set sendmail="/usr/bin/msmtp -a gmail anto.daniel@inmobi.com"
+set query_command="goobook query '%s'"
+macro index,pager a "<pipe-message>goobook add<return>" "add sender to google contacts"
+set editor="vim -c 'set tw=70 et' '+/^$' "
+bind editor <Tab> complete-query
+set print_command="muttprint"
+my_hdr X-Operating-System: `cat /etc/issue`
+##############
+
+
+set pager_index_lines = 10
+set pager_context = 3
+set pager_stop
+set menu_scroll
+set tilde
+set nomarkers
+
+set sort = threads
+set sort_aux = reverse-date-received
+set sort_alias=alias                 # Sort alphabetically
+
+# Odds and ends
+
+set markers          # mark wrapped lines of text in the pager with a +
+set smart_wrap       # Don't wrap mid-word
+set pager_context=5  # Retain 5 lines of previous page when scrolling.
+set status_on_top    # Status bar on top.
+push <show-version>  # Shows mutt version at startup
+
+macro index,pager I '<shell-escape> fetchmail -v<enter>'
+
+source ~/.mutt/auto_views
+source ~/.mutt/sig
+source ~/.mutt/aliases
+source ~/.mutt/headers
+source ~/.mutt/bindings
+source ~/.mutt/macros
+source ~/.mutt/colors/transparent
+#source ~/.mutt/colors/colors.zenburn
+#source ~/.mutt/colors/light.color
+source ~/.mutt/non-standard

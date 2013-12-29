@@ -1,0 +1,15 @@
+# vim: set et ft=muttrc ts=4 sw=4 tw=0:
+
+bind index gg first-entry
+bind index G last-entry
+bind index R group-reply
+bind index,pager <down> sidebar-next
+bind index,pager <up> sidebar-prev
+bind index,pager <right> sidebar-open
+bind pager k previous-entry
+bind pager j next-entry
+bind pager gg top
+bind pager G bottom
+bind pager R group-reply
+bind attach <return> view-mailcap
+bind editor <Tab> complete-query

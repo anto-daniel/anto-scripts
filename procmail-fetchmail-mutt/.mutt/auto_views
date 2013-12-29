@@ -1,0 +1,5 @@
+# vim: set et ft=muttrc ts=4 sw=4 tw=0:
+
+auto_view text/x-patch
+auto_view text/html
+auto_view text/x-diff

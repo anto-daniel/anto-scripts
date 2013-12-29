@@ -1,0 +1,86 @@
+:0
+* ^(From.*(enterprisedb|postgres)@|Subject.*(DB-Oncall|check_postgres|check_infobright_uptime|check_mysql))
+DB-Alerts
+
+:0
+* ^Subject.*Shift
+Shift-Handover
+
+:0
+* ^From.*Chidananda
+Chida
+
+:0
+* ^From.*(Shince.Xavier|anto.daniel|amal.ts|rahul.tanksale|karthikeyan.k|balasundaram.k|manzoor.ahamed|bobby.paulose|nagarjuna.n|sandeep.kavalan|yugandhar.yetham|kumar.kishlay|chaitanya.p)@inmobi.com
+NOC
+
+:0
+* ^From.*Mohit.Saxena@inmobi.com
+Chida
+
+:0
+* ^From.*raghvendra.tripathi@inmobi.com
+Raghvendra
+
+:0
+* ^From.*@aryaka.com
+Aryaka
+
+:0
+* ^From.*(nagios@netmon1001|jaseer@opsqa1.corp.inmobi.com)
+NetOps
+
+:0
+* ^(From.*(sprout-ops@inmobi.com|nagios@mon01.ssp.wc1.inmobi.com)|Subject.*(SSP-Alert|DSP-Alert))
+SSP-DSP
+
+:0
+* ^Subject.*Adserve_cluster_services
+Cluster
+
+:0
+* ^(From.*(nagios@mon1|alert@keynote.com|(nagios|root)@mon1000.ops.ev1.inmobi.com|(nagios|root)@mon1000.ops.sg1.inmobi.com)|Subject.*(AppOps|.roi|.app.(lhr1|ua2|uj1)))
+AppOps
+
+:0
+* ^(From.*(mon01.ads.UJ1.inmobi.com|mon01.ads.lhr1.inmobi.com|mon1000.ops.hkg1.inmobi.com|mon02.ads.ua2.inmobi.com|hmon01)|Subject.*.m10n.)
+Adserve
+
+:0
+* ^From.*(tzns4003.grid.uj1.inmobi.com|opns4006.grid.hkg1.inmobi.com|erns4003.grid.lhr1.inmobi.com|gsmon.grid.lhr1.inmobi.com|gsmon2000.red.ua2.inmobi.com|gsmon2.grid.wc1.inmobi.com)
+Grid
+
+:0
+* ^From.*nagios
+Nagios
+
+:0
+* ^(From.*(dataload|dwh|yoda)@|Subject.*Bi-Oncall)
+BI-Dev
+
+:0
+* ^From.*no-reply@pagerduty.com
+PagerDuty
+
+:0
+* ^From.*Cron
+Cron
+
+:0
+* ^From.*alerter@my.rightscale.com
+RightScale
+:0
+* ^From.*otrs@inmobi.com
+OTRS
+
+:0
+* ^From.*bugs@inmobi.com
+Bugs
+
+:0
+* ^From.*(carpathia.com|navisite.com)
+DC
+
+:0
+* ^From.*ultra-alerts-noreply@neustar.biz
+SiteBacker

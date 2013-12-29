@@ -1,0 +1,17 @@
+## HTML
+#text/html; w3m -I %{charset} -T text/html; copiousoutput;
+#text/html; /usr/bin/w3m -T text/html '%s'; needsterminal; description=HTML Text; nametemplate=%s.html
+#text/html; /usr/bin/lynx -force_html '%s'; needsterminal; description=HTML Text; nametemplate=%s.html
+text/html; /usr/bin/w3m -dump -T text/html '%s'; copiousoutput; description=HTML Text; nametemplate=%s.html
+#text/html; /usr/bin/html2text '%s'; copiousoutput; description=HTML Text text/html; /usr/bin/lynx -dump -force_html '%s'; copiousoutput;
+#description=HTML Text; nametemplate=%s.html text/html; /usr/bin/sensible-browser '%s'; description=HTML Text; nametemplate=%s.html
+application/pdf; { set -m \; /bin/mv -T %s %s.mv \; ( evince %s.mv \; /bin/rm %s.mv \; ) & } \; disown -a
+
+#image/gif; /usr/bin/feh %s &
+#image/jpeg; /usr/bin/feh %s &
+#image/png; feh %s &
+image/*;w3m %s
+# Calendar/iCal
+text/calendar;icalmutt.rb -i 'mailto:<emalid>' %s;
+application/ics;icalmutt.rb -i 'mailto:<emailid>' %s;
+~                                                                    

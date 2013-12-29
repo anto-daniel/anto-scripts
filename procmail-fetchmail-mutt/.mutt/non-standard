@@ -1,0 +1,6 @@
+# vim: set et ft=muttrc ts=4 sw=4 tw=0:
+
+set sidebar_delim = '│'
+set sidebar_visible = yes
+set sidebar_width = 24
+color sidebar_new yellow default

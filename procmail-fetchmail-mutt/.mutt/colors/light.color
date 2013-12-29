@@ -1,0 +1,12 @@
+color normal black white
+color attachment brightyellow white
+color hdrdefault blue white
+color indicator yellow white
+color markers brightred white
+color quoted yellow white
+color signature cyan white
+color status white blue
+color tilde yellow white
+color tree magenta white
+color body brightyellow white [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+
+color body brightblue white (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+

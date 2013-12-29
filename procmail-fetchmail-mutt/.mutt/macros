@@ -1,0 +1,12 @@
+# vim: set et ft=muttrc ts=4 sw=4 tw=0:
+
+macro index ,r "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+macro index ,a "T~A<enter>" "tag all messages"
+macro index ,d "T~A<enter><tag-prefix><set-flag>D<untag-pattern>.<enter>" "mark all as delete"
+macro index ,i "<change-folder>+anto.daniel.inmobi.com/INBOX<enter>" "Goto INBOX"
+macro index ,s "<save-message>+anto.daniel.inmobi.com/spam<enter>" "Mark as SPAM"
+macro index ,h "<save-message>+anto.daniel.inmobi.com/INBOX<enter>" "Unmark as SPAM"
+
+macro index ,O "<shell-escape>offlineimap<enter>" "run offlineimap to sync all mail"
+macro index ,o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
+macro index,pager a "<pipe-message>goobook add;goobook reload<enter>" "add sender to google contacts"

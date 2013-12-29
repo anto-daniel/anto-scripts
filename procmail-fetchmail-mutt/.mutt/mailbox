@@ -1,0 +1,23 @@
+mailboxes ! +Cluster-1 \
+            +Adserve \
+            +BI-Dev \
+            +NetOps \
+            +SSP-DSP \
+            +Cluster-2 \
+            +Grid \
+            +AppOps \
+            +DB-Alerts \
+            +Bugs \
+            +PagerDuty \
+            +OTRS \
+            +NOC \
+            +Chida \
+            +Raghvendra \
+            +DC \
+            +RightScale \
+            +SiteBacker \
+        +Shift-Handover \
+        +Aryaka \
+        +Cron \
+        +Nagios \
+        +sent
