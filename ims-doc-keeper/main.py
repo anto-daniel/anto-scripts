@@ -106,9 +106,8 @@ class AssetDoc:
             else:
                 print "Adding Attribute: "+addatr
                 doc[addatr] = {
-                                "doc": "", 
-                                "type": self.view_attributes(asset)[addatr]
-                              }
+                    "doc": "",
+                    "type": self.view_attributes(asset)[addatr]}
         for delatr in self.del_attributes(asset):
             if delatr in doc:
                 print "Deleting: "+delatr
@@ -148,11 +147,10 @@ def main():
             print typeid+" not exists"
             print "creating "+typeid
             api.database.save({
-                                "_id": ""+typeid+"", 
-                                "doc_text": "", 
-                                "doc_url": "", 
-                                "name": ""+asset+""
-                              })
+                "_id": ""+typeid+"",
+                "doc_text": "",
+                "doc_url": "",
+                "name": ""+asset+""})
         if api.add_attributes(asset) == []:
             print asset+": All Fields present"
         api.save_doc(asset)
