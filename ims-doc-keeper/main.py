@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """ This script adds and deletes attributes in the asset
- attribute and type document   """
+ attribute and type document in couchdb  """
+
 import couchdb
 import collections
 from difflib import Differ
