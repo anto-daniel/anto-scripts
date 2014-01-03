@@ -1,29 +1,32 @@
+#!/usr/bin/env python
+""" Script is used to find diff and add attributes """
+
 import couchdb
-import json
 import collections
-import difflib
 from difflib import Differ
-import sys
 import re
-import ConfigParser
 from config import imsconfig
 
 
-ims = imsconfig() 
-user = ims.ConfigSectionMap("credentials")['username']
-passwd = ims.ConfigSectionMap("credentials")['password']
-host = ims.ConfigSectionMap("hostinfo")['host']
-port = ims.ConfigSectionMap("hostinfo")['port']
-dbname = ims.ConfigSectionMap("db")['db']
-design_doc = ims.ConfigSectionMap("designdoc")['design']
-
-server = couchdb.Server('http://'+user+':'+passwd+'@'+host+':'+port)
-db = server[dbname]
 
 
-class couchdb_api():
+class AssetDoc:
 
     """ Class couchdb_api which calls functions to save additional attributes in doc api """
+
+    def __init__(self):
+        
+        """ Constructor. Initialising variables """
+
+        ims = imsconfig() 
+        user = ims.ConfigSectionMap("credentials")['username']
+        passwd = ims.ConfigSectionMap("credentials")['password']
+        host = ims.ConfigSectionMap("hostinfo")['host']
+        port = ims.ConfigSectionMap("hostinfo")['port']
+        dbname = ims.ConfigSectionMap("db")['db']
+        self.design_doc = ims.ConfigSectionMap("designdoc")['design']
+        server = couchdb.Server('http://'+user+':'+passwd+'@'+host+':'+port)
+        self.db = server[dbname]
 
     def uniq(self, input):
         
@@ -51,7 +54,7 @@ class couchdb_api():
         """ returns all attributes in all the docs in the database """
         
         attributes = []
-        for row in db.view(design_doc,group='true'):
+        for row in self.db.view(self.design_doc, group='true'):
             asset_type = row.key[0]
             if asset_type == asset:
                 attributes.append(row.key[1])

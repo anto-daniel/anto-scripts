@@ -24,7 +24,6 @@ class AssetDoc:
         port = ims.ConfigSectionMap("hostinfo")['port']
         dbname = ims.ConfigSectionMap("db")['db']
         self.design_doc = ims.ConfigSectionMap("designdoc")['design']
-
         server = couchdb.Server('http://'+host+':'+port)
         server.resource.credentials = (user, passwd)
         self.database = server[dbname]
