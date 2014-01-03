@@ -56,7 +56,7 @@ class AssetDoc:
         """ returns all attributes for doc.attr_doc:<asset> """
 
         tmplist2 = []
-        docid = 'asset.attr_doc:'+asset
+        docid = 'ims.attr_doc:'+asset
         doc = self.database[docid]
         orderdata = collections.OrderedDict(sorted(doc.iteritems()))
         for attr in orderdata:
@@ -98,7 +98,7 @@ class AssetDoc:
 
         """ Saves the attributes in the doc.attr_doc:asset """
 
-        docid = 'asset.attr_doc:'+asset
+        docid = 'ims.attr_doc:'+asset
         doc = self.database[docid]
         for addatr in self.add_attributes(asset):
             if addatr in doc:
@@ -137,8 +137,8 @@ def main():
     api = AssetDoc()
     assets = api.asset_types()
     for asset in assets:
-        docid = 'asset.attr_doc:'+asset
-        typeid = 'asset.type_doc:'+asset
+        docid = 'ims.attr_doc:'+asset
+        typeid = 'ims.type_doc:'+asset
         if docid not in api.database:
             print docid+" not exists"
             print "creating "+docid
