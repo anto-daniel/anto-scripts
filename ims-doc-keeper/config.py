@@ -1,7 +1,13 @@
+#!/usr.bin/env python
+'''
+    Script to read the config file
+'''
+
 import ConfigParser
 
 Config = ConfigParser.ConfigParser()
 Config.read("config/config.ini")
+
 
 class imsconfig():
 

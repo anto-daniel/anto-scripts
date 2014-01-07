@@ -1,5 +1,9 @@
 #!/usr/bin/env python
-""" script """
+""" 
+    Script to change all old asset.attr_doc  to ims.attr_doc.
+    It will copy all contents of asset.attr_doc to 
+    ims.attr_doc 
+"""
 
 import couchdb
 import collections
