@@ -12,7 +12,7 @@ import re
 from config import imsconfig
 
 
-class asset_doc():
+class CopyAssetDoc:
 
     """ Main Class """
 
@@ -72,7 +72,7 @@ def main():
     
     """ Main Function """
     
-    api = asset_doc()
+    api = CopyAssetDoc()
     assets = api.asset_types()
     for asset in assets:
         api.save_doc(asset)
