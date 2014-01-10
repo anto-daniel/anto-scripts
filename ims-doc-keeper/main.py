@@ -24,6 +24,7 @@ class AssetDoc:
         port = ims.ConfigSectionMap("hostinfo")['port']
         dbname = ims.ConfigSectionMap("db")['db']
         self.design_doc = ims.ConfigSectionMap("designdoc")['design']
+
         server = couchdb.Server('http://'+host+':'+port)
         server.resource.credentials = (user, passwd)
         self.database = server[dbname]
@@ -53,7 +54,7 @@ class AssetDoc:
 
     def view_doc_attributes(self, asset):
 
-        """ returns all attributes for doc.attr_doc:<asset> """
+        """ returns all attributes for ims.attr_doc:<asset> """
 
         tmplist2 = []
         docid = 'ims.attr_doc:'+asset
@@ -102,12 +103,33 @@ class AssetDoc:
         doc = self.database[docid]
         for addatr in self.add_attributes(asset):
             if addatr in doc:
-                print "Attribute: "+addatr+" already exist"
+                print asset+": Attribute: "+addatr+" already exist"
             else:
-                print "Adding Attribute: "+addatr
+                print asset+": Adding Attribute: "+addatr
                 doc[addatr] = {
                     "doc": "",
                     "type": self.view_attributes(asset)[addatr]}
+
+        for att in doc:
+            if "_id" not in att and "_rev" not in att:
+                if "doc" not in doc[att]:
+                    print asset+": "+att+": attribute has no doc field present"
+                    print asset+": Adding doc field in "+att
+                    doc[att]['doc'] = ""
+                elif "type" not in doc[att]:
+                    print asset+": "+att+": attribute has no type field present"
+                    print asset+": Adding type field in "+att
+                    doc[att]['type'] = self.view_attributes(asset)[att]
+                else:
+                    pass
+        self.database.save(doc)
+
+    def del_doc(self, asset):
+        
+        """ Deleted the attributes which are no longer needed """
+
+        docid = 'ims.attr_doc:'+asset
+        doc = self.database[docid]
         for delatr in self.del_attributes(asset):
             if delatr in doc:
                 print "Deleting: "+delatr
@@ -115,20 +137,6 @@ class AssetDoc:
             else:
                 pass
         self.database.save(doc)
-        for att in doc:
-            if "_id" not in att and "_rev" not in att:
-                if "doc" not in doc[att]:
-                    print att+": attribute has no doc field present"
-                    print "Adding doc field in "+att
-                    doc[att]['doc'] = ""
-                elif "type" not in doc[att]:
-                    print att+": attribute has no type field present"
-                    print "Adding type field in "+att
-                    doc[att]['type'] = self.view_attributes(asset)[att]
-                else:
-                    pass
-        self.database.save(doc)
-
 
 def main():
 
@@ -154,6 +162,9 @@ def main():
         if api.add_attributes(asset) == []:
             print asset+": All Fields present"
         api.save_doc(asset)
+        if api.del_attributes(asset) == []:
+            print asset+": No Fields needs to be deleted"
+        api.del_doc(asset)
 
 if __name__ == "__main__":
     main()
