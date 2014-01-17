@@ -1,0 +1,164 @@
+Date: 15/01/2014
+System Operations on AWS
+------------------------
+
+AWS Regions - 9 regions - in north america(4), south america(1), europe(1), singapore(1), australia(1), tokyo(1)
+
+resolves latency issues
+
+availabilty zones in different regions
+
+ec2 - virtual machine service
+
+auto scaling - well known features, helps to control load(we need to redefine load if its cpu, mem, ..). minimise the cost
+
+Amazon S3 - storage. internet scale storage via API. u will never run out of space
+
+Scope of AWS Resources:
+-----------------------
+Global
+Region
+Availabilty Zone
+
+=================
+Session2:
+
+vpc: virtual private cloud: AWS charge only for vpn connections other than not charge
+
+
+ CIDR (Classless Inter-Domain Routing)
+
+ subnets: how to find how many ip's used or left out:- 
+
+vpc comes with internet gateway 
+[0.0.0.0/0] -> means any ip address public - it traverses all subnets and routing entry and can access to internet (google.com)
+EIP - Elastic IP - once we got the IP, the IP doesn't change 
+
+
+AWS Security groups - Firewall ports - At subnet levels, its called ACL(access control list)
+
+ENI - Elastic Network Interface - multiple IPs or websites in same hosts - ENIs are free. Always private. It cannot move across different subnets
+
+NIC Teaming
+
+VPG - Virtual Private Gateway
+
+dedicated tenancy
+
+NACL - Network Access Control List
+IGW - Internet Gateway
+VGW - Virtual Private Gateway
+
+
+
+
+Lab Manual
+=======
+
+Username: awsstudent
+Password: YhxN6cgMt
+
+VPC id:vpc-2e05e04b
+Group id: sg-02857e67
+
+Key pair name: qwiklab-l21-62099y
+
+
+
+AWS IAM
+=======
+Control Resources
+MFA: Multifactor Authentication(MFA)
+Server Certificates: SSL: Can push IAM ssl certificate to ELB ssl so that we can add ssl to instances under ELBs(Since ELBs can't ssh and can ssh via instance)
+
+
+
+
+Lab 2:
+=======
+username: awsstudent
+password: ktZNv3Kq
+
+amazon ec2
+==========
+
+AMI - AMAZON MACHINE IMAGES
+
+ec2 is region specific and ami is scope specific
+
+
+
+vpc id: vpc-0f12f76a
+
+ELBSecurityGroup:
+-----------------
+group id: sg-69d12a0c
+
+
+16/01/2014
+==========
+
+Tagging:
+--------
+
+Tagging Key Value Pairs
+Tagging: used for billing, access
+
+SysOps on AWS Enterprise Monitoring:
+----------------------------------
+
+ Difference between Nagios and CloudWatch
+
+Cloudwatch cannot monitor memory, because securty policy.
+
+Cloudwatch:
+========
+Benefits:
+------
+* Autoscaling - set policy such that if CPU crosses 70%, use another instance
+
+Backup
+======
+
+Glacier 
+Encrypt EBS volume
+
+
+Logging | Architectures
+
+* Distributed Log Collection Service
+* 3rd party Log Collection Service - SAS Provider
+* Centralized Logging rotation
+* Analysis * Commercial software / managed solutions
+  	   * Hadoop
+	     - Distributed, Map Reduce, ideal for log analysis
+	   * Redshift
+	     - Patallelized, S2 optimized
+* Amazon S3 keys 
+    - Don't use hostname as part of the keyspace 
+    - Optimize for grouping:
+        * Application
+        * Function
+        * Date
+* Lifecycle rules
+    * Expiration (delete)
+    * Move to Amazon Glacier
+
+Autoscaling: verticaling scaling - high cpu  -adding ram ,cpu it leads to downtime - switch off one instance and switch on instance of another 
+	     horizontally scaling - 1 server - more capacity- here it is adding servers instead of ram, cpu's
+
+
+Elastic IPs are free.
+
+When all we use Autoscaling: when load is full in one instance and can switch it another instance
+
+Bootstrapping: should ready to take traffic
+
+============================
+IMP: Check for startup programs in your laptop and decrease the bootup load. My Laptop takes lot of time to bootup
+=======================================
+
+Session Replication in tomcat and jboss. its there in aws too, its needed when autoscaling affects applications in several instances.
+
+learn definitions like  haproxy, 
+

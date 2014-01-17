@@ -1,0 +1,9 @@
+apt-get update
+apt-get install xfsprogs mdadm
+mdadm --create --verbose /dev/md0 --level=raid0 --raid-devices=4 /dev/xvde  /dev/xvdd /dev/xvdc /dev/xvdb
+mdadm --detail --scan >> /etc/mdadm/mdadm.conf
+mkfs.xfs /dev/md0
+blkid /dev/md0    
+vim /etc/fstab
+mkdir /opt/mkhoj/
+mount -a
