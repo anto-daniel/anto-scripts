@@ -7,5 +7,5 @@ then
 	echo "Download Failed"
 	exit 1
 else
-	sudo python get-pip.py
+	python get-pip.py
 fi
