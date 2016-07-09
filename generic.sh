@@ -14,11 +14,11 @@ builddir="/tmp/$envname/build"
 finalbuild="/tmp/$envname/$buildnum"
 
 
-#if [[ $buildurl == "" || $envname == "" ]]
-#then
-#    echo "Usage: ./generic.sh <buildurl> <environment name>"
-#    exit 1
-#fi
+if [[ $buildurl == "" || $envname == "" ]]
+then
+    echo "Usage: ./generic.sh <buildurl> <environment name>"
+    exit 1
+fi
 mkdir -p $builddir $finalbuild
 
 function validate_url() {
@@ -105,56 +105,52 @@ function copy_karaf_production() {
     karaf_build_dir="${finalbuild}/production/karaf" && mkdir -p ${karaf_build_dir}
     karaf_prod_dir="/etc/puppet/environments/production/modules/karaf_birthing/templates"
     cd $karaf_prod_dir && cp -rf *.properties.erb $karaf_build_dir
+    if [ $? -ne 0 ];then echo -ne "\n Property erb files missing in $karaf_prod_dir\n";return 1;fi
     cd $karaf_build_dir
     for file in $(ls -1 | egrep  ".*.properties.erb$")
     do
         mv $file $(basename $file .erb)
     done
-    
     echo -ne "\nKaraf APC: Copied Prod Properties files to $karaf_build_dir\n"
-
 }
 
 function copy_nfs_production() {
     nfs_build_dir="${finalbuild}/production/karaf_nfs" && mkdir -p ${nfs_build_dir}
     nfs_prod_dir="/etc/puppet/environments/production/modules/karaf_nfs_birthing/templates"
     cd $nfs_prod_dir && cp -rf *.properties.erb $nfs_build_dir
+    if [ $? -ne 0 ];then echo -ne "\nProperty erb files missing in $nfs_prod_dir\n";return 1;fi
     cd $nfs_build_dir
     for file in $(ls -1 | egrep  ".*.properties.erb$")
     do
         mv $file $(basename $file .erb)
     done
-
     echo -ne "\nKaraf NFS: Copied Prod Properties files to $nfs_build_dir\n"
-
 }
 
 function copy_hz_production() {
     hz_build_dir="${finalbuild}/production/hazel" && mkdir -p ${hz_build_dir}
     hz_prod_dir="/etc/puppet/environments/production/modules/hazelcast_birthing/templates"
     cd $hz_prod_dir && cp -rf *.properties.erb $hz_build_dir
+    if [ $? -ne 0 ];then echo -ne "\nProperty erb files missing in $hz_prod_dir";return 1;fi
     cd $hz_build_dir
     for file in $(ls -1 | egrep  ".*.properties.erb$")
     do
         mv $file $(basename $file .erb)
     done
-
     echo -ne "\nHazelcast: Copied Prod Properties files to $hz_build_dir\n"
-
 }
 
 function copy_stm_production() {
     stm_build_dir="${finalbuild}/production/storm" && mkdir -p ${stm_build_dir}
     stm_prod_dir="/etc/puppet/environments/production/modules/storm_birthing/templates"
     cd $stm_prod_dir && cp -rf *.properties.erb $stm_build_dir
+    if [ $? -ne 0 ];then echo -ne "\n Property erb files missing in $stm_prod_dir\n";return 1;fi
     cd $stm_build_dir
     for file in $(ls -1 | egrep  ".*.properties.erb$")
     do
         mv $file $(basename $file .erb)
     done
-
     echo -ne "\nStorm: Copied Prod Properties files to $stm_build_dir\n"
-
 }
 
 
