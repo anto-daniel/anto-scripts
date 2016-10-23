@@ -145,16 +145,20 @@ function puppet_conf_modification() {
 }
 
 function write_site_puppet_file() {
-
-tee /etc/puppet/manifests/site.pp <<EOM
-node '$fqdn.actiance.local' {
-     class { '::mcollective':
-            middleware               => true,
-            client               => true,
-            middleware_hosts => [ 'puppet.actiance.local' ],
-          }
-}
-EOM
+    sitefile=/etc/puppet/manifests/site.pp
+    mkdir -v -p /etc/puppet/manifests/
+    domain=$(facter | grep domain | awk -F'>' '{print $2}' | sed 's/^\ *//g')
+    if [ -f /etc/puppet/manifests/site.pp ]
+    then
+        cp /dev/null $sitefile
+    fi 
+    echo "node '$fqdn.$domain' {" >> $sitefile
+    echo "     class { '::mcollective':" >> $sitefile
+    echo "            middleware       => true," >> $sitefile
+    echo "            client           => true," >> $sitefile
+    echo "            middleware_hosts => [ 'puppet.actiance.local' ]," >> $sitefile
+    echo "          }" >> $sitefile
+    echo "}" >> $sitefile
     echo -e "INFO: Puppet QA site.pp file prepared "
 }
 
@@ -207,7 +211,7 @@ function extract_url() {
 		echo -ne "Extraction Done.\n"
 	else
 		echo -ne "\n Moving to Local Build Dir \n"
-                cp -rfv $buildurl/* $builddir/  2>&1
+        cp -rfv $buildurl/* $builddir/  2>&1
 	fi
 
 }
@@ -224,10 +228,17 @@ function extract_twn() {
 	echo -e "INFO: Townsend keys copied successfully."
 }
 
-function install_mcollective_server_packages() {
+function puppet_run() {
+    ln -s /etc/hiera.yaml /etc/puppet/hiera.yaml
 	puppet apply /etc/puppet/manifests/site.pp >>$log 2>error
 	if [ $? -ne 0 ];then echo -e "ERROR: Mcollective Packages not installed.";exit 1;fi
 	echo -e "INFO: MCollective Packages are successfully installed..."
+
+}
+function install_mcollective_server_packages() {
+    apt-get install mcollective-package-client mcollective-puppet-client mcollective-service-client -y >> $log 2>error
+    if [ $? -ne 0 ];then echo -e "ERROR: Unable to install Mcollective server packages";exit 1;fi
+    echo -e "INFI: MCollective Server Packages are installed..."
 
 }
 download_install_puppet_repo
@@ -235,11 +246,12 @@ apt-update
 install_puppet_master
 adding_host_entry
 puppet_conf_modification
-write_site_puppet_file
 extract_deployment_modules
+write_site_puppet_file
 puppet_restart
 validate_url
 extract_url
 extract_ceph
 extract_twn
+puppet_run
 install_mcollective_server_packages
