@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+script=$0
 user=$1
 hostconfig=$2
 ssh_args="-o StrictHostKeyChecking=no -o CheckHostIP=no -o ConnectTimeout=5"
@@ -10,7 +10,7 @@ cmd="hostname"
 if test -z $1 || test -z $2  
 then
     echo "ERROR: Argument is missing"
-    echo -e "Usage: ./cert_prep.sh <user> <hostconfig>"
+    echo -e "Usage: $script <user> <hostconfig>"
     exit 1
 fi
 
