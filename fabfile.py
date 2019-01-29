@@ -5,8 +5,8 @@ from fabric.api import run, sudo
 from fabric.api import env, put
 
 #env.hosts = ['192.168.112.16', '192.168.120.44']
-env.user = "sysops"
-env.password = "alcatraz1400"
+env.user = "xxxxxxx"
+env.password = "xxxxxxxx"
 
 def hello(who="world"):
     print "Hello {who}!".format(who=who)
