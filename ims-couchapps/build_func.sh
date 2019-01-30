@@ -1,5 +1,5 @@
 #!/bin/bash 
-export PATH=$PATH:/opt/inmobi/bin
+export PATH=$PATH:/opt/xxxx/bin
 function check_version {
   if [ ! -f VERSION ]; then
     echo Need VERSION file
@@ -13,8 +13,8 @@ function set_variables {
   PKGNAME="ims-couchapps"
   #ENV=$1
   BUILDROOT=buildroot
-  BUILDDIR=$BUILDROOT/opt/inmobi/$PKGNAME
-  POSTINSTDIR=/opt/inmobi/$PKGNAME
+  BUILDDIR=$BUILDROOT/opt/xxxx/$PKGNAME
+  POSTINSTDIR=/opt/xxxx/$PKGNAME
   check_version
   KANSODIR="./node_modules/kanso"
   DB="ims"
@@ -23,7 +23,7 @@ function set_variables {
 function set_env {
   mkdir -p $BUILDROOT/etc/profile.d
   cat > $BUILDROOT/etc/profile.d/ims_path.sh <<EOM
-  export PATH=\$PATH:/opt/inmobi/bin
+  export PATH=\$PATH:/opt/xxxx/bin
 EOM
     }
 
@@ -38,7 +38,7 @@ function npm_kanso_install {
   OLDDIR=`pwd`
   cd $BUILDDIR/$dir
   rm -rf packages/ node_modules/
-  /opt/inmobi/bin/npm install
+  /opt/xxxx/bin/npm install
   $KANSODIR/bin/kanso install
   cd $OLDDIR
 }
@@ -51,12 +51,12 @@ version: $VERSION
 arch: amd64
 description: IMS CouchApps
 depends: ims-nodejs
-url: http://ims.corp.inmobi.com/
-maintainer: Anto Daniel <anto.daniel@inmobi.com>
+url: http://ims.corp.xxxx.com/
+maintainer: Anto Daniel <anto.daniel@xxxx.com>
 postinst: |
   #!/bin/bash
   source /etc/profile.d/ims_path.sh
-  APPDIR=/opt/inmobi/ims-couchapps
+  APPDIR=/opt/xxxx/ims-couchapps
   cd \$APPDIR
   for dir in *
   do
