@@ -4,6 +4,7 @@ if [[ $1 == "" ]]; then
   echo "Need 1st argument..."
   exit 0
 fi
+
 #### input the pipeline name ####
 pname=$1
 credhub login
