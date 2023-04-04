@@ -10,5 +10,10 @@ cnt=$sec
 for i in `seq 1 $cnt`;do
   sleep 1
   let cnt=$cnt-1
-  echo -ne "...$cnt\r"
+  if [ $cnt -lt 10 ]; then 
+    cnt1=0$cnt
+    echo -ne "Wait for $cnt1 seconds\r"
+  else
+    echo -ne "Wait for $cnt seconds\r"
+  fi
 done
